@@ -25,3 +25,9 @@ async function createUser(e) {
     formEmail.value = '';
     formPassword.value = '';
 }
+
+let alertShow = false;
+setInterval(() => {
+    document.title = alertShow ? "Welcome to Day2Day": "User - Signup";
+    alertShow = !alertShow;
+}, 2000);
