@@ -2,6 +2,7 @@ const form = document.getElementById('form');
 const formName = document.getElementById('form-name');
 const formEmail = document.getElementById('form-email');
 const formPassword = document.getElementById('form-password');
+const alert = document.querySelector('.alert');
 
 form.addEventListener('submit', createUser);
 
@@ -16,8 +17,21 @@ async function createUser(e) {
 
     try {
         const response = await axios.post('http://localhost:4000/user/signup', userInfo);
-        console.log(response.data);
+        if (response.status == '201') {
+            alert.classList.add('success');
+            alert.innerHTML = 'User registered successfully. Try Login!';
+            setTimeout(() => {
+                alert.classList.remove('success');
+                alert.innerHTML = '';
+            }, 3000);
+        }
     } catch (error) {
+        alert.classList.add('error');
+        alert.innerHTML = 'User is already registered. Try Login!';
+        setTimeout(() => {
+            alert.classList.remove('error');
+            alert.innerHTML = '';
+        }, 3000);
         console.log(error);
     }
 
@@ -28,6 +42,6 @@ async function createUser(e) {
 
 let alertShow = false;
 setInterval(() => {
-    document.title = alertShow ? "Welcome to Day2Day": "User - Signup";
+    document.title = alertShow ? "Welcome to Day2Day" : "User - Signup";
     alertShow = !alertShow;
 }, 2000);
