@@ -11,7 +11,7 @@ const signUpController = async (req, res) => {
             return res.status(400).send("All fields are required");
         }
 
-        //checking if the user already exists
+        //checking if the user already registered
         const oldUser = await User.findAll({ where: { email: email}}); //this returns an array
         if (oldUser.length > 0) {
             return res.status(409).send("User is already registered");
@@ -29,6 +29,38 @@ const signUpController = async (req, res) => {
     }
 };
 
-module.exports = {
-    signUpController
+const loginController = async (req, res) => {
+    try {
+        //spreading user information from request body
+        const { email, password } = req.body;
+
+        //checking if any field is empty
+        if(!email || !password) {
+            return res.status(400).send("Enter all the fields");
+        }
+
+        //cheking if user exists
+        const user = await User.findAll({ where: { email: email }});
+        if(user.length == 0) {
+            return res.status(409).send("User is not registered");
+        }
+
+        //checking entered password is correct or not
+        const matchedPassword = await bcrypt.compare(password, user[0].password);
+        if (!matchedPassword) {
+            return res.status(403).send("Incorrect password");
+        }
+        
+        //sending user on successful login
+        return res.status(200).json(user);
+        
+    } catch (error) {
+        return res.status(500).send(error);
+    }
 }
+
+module.exports = {
+    signUpController,
+    loginController
+}
+
