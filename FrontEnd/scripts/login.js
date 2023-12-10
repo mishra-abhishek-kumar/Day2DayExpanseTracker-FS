@@ -46,3 +46,9 @@ async function loginUser(e) {
     formEmail.value = '';
     formPassword.value = '';
 }
+
+let alertShow = false;
+setInterval(() => {
+    document.title = alertShow ? "Welcome to Day2Day" : "User - Login";
+    alertShow = !alertShow;
+}, 2000);
