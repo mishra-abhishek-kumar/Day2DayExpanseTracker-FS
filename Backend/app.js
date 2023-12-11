@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 4001;
 User.hasMany(Expense); //It will create a foreignKey to Comment table 
 Expense.belongsTo(User, { constraints: true }); //this constraints specifies that Post table should be created before Comment table
 
-sequelize.sync({force: true})
+sequelize.sync()
     .then(user => {
         app.listen(PORT, () => {
             console.log("Listening on PORT:", PORT);

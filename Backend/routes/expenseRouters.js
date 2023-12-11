@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const expenseControllet = require('../controllers/expenseController');
+const requiredUser = require("../middlewares/requiredUser");
 
-router.post('/add-expense/:userId', expenseControllet.addExpense);
-router.get('/get-expense/:userId', expenseControllet.getExpense); 
+router.post('/add-expense', expenseControllet.addExpense);
+router.get('/get-expense', requiredUser, expenseControllet.getExpense); 
 router.put('/edit-expense/:expenseId', expenseControllet.updateExpense);
 router.delete('/delete-expense/:expenseId', expenseControllet.deleteExpense);
 
