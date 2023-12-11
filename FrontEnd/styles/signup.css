@@ -60,18 +60,6 @@
     position: relative;
 }
 
-.success {
-    position: absolute;
-    top: 8px;
-    width: 64%;
-    padding: 1px 10px;
-    margin: 0px 0px 0px 112px;
-    font-size: small;
-    background-color: rgb(184, 255, 184);
-    border: 2px solid green;
-    border-radius: 10px;
-}
-
 .error {
     position: absolute;
     top: 8px;

@@ -18,12 +18,7 @@ async function createUser(e) {
     try {
         const response = await axios.post('http://localhost:4000/user/signup', userInfo);
         if (response.status == '201') {
-            alert.classList.add('success');
-            alert.innerHTML = 'User registered successfully. Try Login!';
-            setTimeout(() => {
-                alert.classList.remove('success');
-                alert.innerHTML = '';
-            }, 3000);
+            window.location.href = 'http://127.0.0.1:5500/FrontEnd/pages/home.html';
         }
     } catch (error) {
         if (error.response.status == '409') {
