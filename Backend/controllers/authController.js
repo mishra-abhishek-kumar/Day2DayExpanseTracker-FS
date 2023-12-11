@@ -13,7 +13,7 @@ const signUpController = async (req, res) => {
         }
 
         //checking if the user already registered
-        const oldUser = await User.findAll({ where: { email: email}}); //this returns an array
+        const oldUser = await User.findAll({ where: { email: email } }); //this returns an array
         if (oldUser.length > 0) {
             return res.status(409).send("User is already registered");
         }
@@ -22,10 +22,12 @@ const signUpController = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         //creating new user
-        const user = await User.create({name, email, password: hashedPassword});
+        const user = await User.create({ name, email, password: hashedPassword });
 
+        //generating accessToken
+        const accessToken = generateAccessToken({ id: user.id });
 
-        return res.status(201).json(user);
+        return res.status(201).json(accessToken);
 
     } catch (error) {
         return res.status(500).send(error);
@@ -38,13 +40,13 @@ const loginController = async (req, res) => {
         const { email, password } = req.body;
 
         //checking if any field is empty
-        if(!email || !password) {
+        if (!email || !password) {
             return res.status(400).send("Enter all the fields");
         }
 
         //cheking if user exists
-        const user = await User.findAll({ where: { email: email }});
-        if(user.length == 0) {
+        const user = await User.findAll({ where: { email: email } });
+        if (user.length == 0) {
             return res.status(409).send("User is not registered");
         }
 
@@ -54,11 +56,12 @@ const loginController = async (req, res) => {
             return res.status(403).send("Incorrect password");
         }
 
-        const accessToken = generateAccessToken({id: user[0].id})
+        //generating accessToken
+        const accessToken = generateAccessToken({ id: user[0].id });
 
         //sending user on successful login
         return res.status(200).json(accessToken);
-        
+
     } catch (error) {
         return res.status(500).send(error);
     }

@@ -143,6 +143,23 @@ input[type=submit]:active {
     background-color: white;
 }
 
+.formPassword {
+    position: relative;
+}
+
+.password-checkbox-container {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-40%);
+    display: flex;
+    align-items: center;
+}
+
+input[type=checkbox] {
+    accent-color: green;
+}
+
 .signIn {
     margin-top: 10px;
 }

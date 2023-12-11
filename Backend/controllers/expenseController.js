@@ -6,7 +6,7 @@ const addExpense = async (req, res) => {
             amt: req.body.amt,
             description: req.body.description,
             category: req.body.category,
-            userId: req.params.userId
+            userId: req.id
         });
         res.send(expense);
     } catch (error) {

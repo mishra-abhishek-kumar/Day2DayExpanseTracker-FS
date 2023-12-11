@@ -56,8 +56,6 @@ async function addExpense(e) {
     if (inputExpense.value === '' || inputDescription.value === '' || inputCategory.value === '') {
         msg.classList.add('error');
         msg.innerHTML = 'Please enter all fields';
-        console.log(1);
-
         setTimeout(() => msg.remove(), 2000);
     } else {
         //Creating different elements to be added in DOM
@@ -92,7 +90,11 @@ async function addExpense(e) {
         }
 
         try {
-            const response = await axios.post(`http://localhost:4000/expenses/add-expense`, expenseObj);
+            const response = await axios.post(`http://localhost:4000/expenses/add-expense`, expenseObj, {
+                headers: {
+                    "Authorization": localStorage.getItem('accessToken')
+                }
+            });
             li.setAttribute("id", response.data.id);
             console.log(response.data);
         } catch (error) {

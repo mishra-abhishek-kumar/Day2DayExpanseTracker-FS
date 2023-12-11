@@ -2,8 +2,10 @@ const form = document.getElementById('form');
 const formEmail = document.getElementById('form-email');
 const formPassword = document.getElementById('form-password');
 const alert = document.querySelector('.alert');
+const checkbox = document.getElementById('show-password');
 
 form.addEventListener('submit', loginUser);
+checkbox.addEventListener('change', togglePassword);
 
 async function loginUser(e) {
     e.preventDefault();
@@ -43,8 +45,18 @@ async function loginUser(e) {
     formPassword.value = '';
 }
 
+
 let alertShow = false;
 setInterval(() => {
     document.title = alertShow ? "Welcome to Day2Day" : "User - Login";
     alertShow = !alertShow;
 }, 2000);
+
+
+function togglePassword() {
+    if(checkbox.checked) {
+        formPassword.type = 'text';
+    } else {
+        formPassword.type = 'password';
+    }
+}

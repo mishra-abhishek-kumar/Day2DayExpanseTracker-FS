@@ -3,8 +3,10 @@ const formName = document.getElementById('form-name');
 const formEmail = document.getElementById('form-email');
 const formPassword = document.getElementById('form-password');
 const alert = document.querySelector('.alert');
+const checkbox = document.getElementById('show-password');
 
 form.addEventListener('submit', createUser);
+checkbox.addEventListener('change', togglePassword);
 
 async function createUser(e) {
     e.preventDefault();
@@ -17,8 +19,8 @@ async function createUser(e) {
 
     try {
         const response = await axios.post('http://localhost:4000/user/signup', userInfo);
-        console.log(response);
         if (response.status == '201') {
+            localStorage.setItem('accessToken', response.data);
             window.location.href = `http://127.0.0.1:5500/FrontEnd/pages/home.html`;
         }
     } catch (error) {
@@ -38,8 +40,18 @@ async function createUser(e) {
     formPassword.value = '';
 }
 
+
 let alertShow = false;
 setInterval(() => {
     document.title = alertShow ? "Welcome to Day2Day" : "User - Signup";
     alertShow = !alertShow;
 }, 2000);
+
+
+function togglePassword() {
+    if(checkbox.checked) {
+        formPassword.type = 'text';
+    } else {
+        formPassword.type = 'password';
+    }
+}

@@ -27,16 +27,17 @@
 
 ul {
     list-style: none;
-    background: rgba(0,0,255,0.3);
+    /* background: greenyellow; */
     padding: 10px;
     border-radius: 8px;
 }
 
 ul li {
     padding: 10px;
-    background: rgb(210, 165, 252);
+    background: green;
+    color: white;
     margin: 5px 0;
-    border: 1px solid blue;
+    border: 1px solid green;
     border-radius: 5px;
 }
 
@@ -54,8 +55,8 @@ ul li {
 .del {
     padding: 2px 8px;
     font-weight: bold;
-    background-color: rgb(160, 71, 243);
-    border: 1px solid blue;
+    background-color: white;
+    border: 1px solid gray;
     border-radius: 5px;
     width: fit-content;
     margin-left: 10px;
@@ -63,17 +64,15 @@ ul li {
 }
 
 .del:hover {
-    background-color: red;
-    box-shadow: 1px 1px rgb(197, 0, 0);
+    background-color: rgb(219, 219, 219);
     cursor: pointer;
-    color: white;
 }
 
 .edit {
     padding: 2px 8px;
     font-weight: bold;
-    background-color: rgb(160, 71, 243);
-    border: 1px solid blue;
+    background-color: white;
+    border: 1px solid gray;
     border-radius: 5px;
     width: fit-content;
     margin-left: 10px;
@@ -81,8 +80,6 @@ ul li {
 }
 
 .edit:hover {
-    background-color: green;
-    box-shadow: 2px 2px rgb(0, 82, 0);
+    background-color: rgb(219, 219, 219);
     cursor: pointer;
-    color: white;
 }
