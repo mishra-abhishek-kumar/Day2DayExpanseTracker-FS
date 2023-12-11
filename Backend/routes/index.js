@@ -3,6 +3,6 @@ const userRoute = require('./authRouters');
 const expenseRoute = require('./expenseRouters');
 
 router.use('/user', userRoute);
-router.use('user/:userId/expenses', expenseRoute);
+router.use('/user/expenses', expenseRoute);
 
 module.exports = router;

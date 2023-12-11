@@ -16,7 +16,8 @@ const addExpense = async (req, res) => {
 
 const getExpense = async (req, res) => {
     try {
-        const expenses = await Expense.findAll({ where: { userId: 1 }});
+        console.log(req.params.userId);
+        const expenses = await Expense.findAll({ where: { userId: req.params.userId }});
         res.send(expenses);
     } catch (error) {
         console.log(error);

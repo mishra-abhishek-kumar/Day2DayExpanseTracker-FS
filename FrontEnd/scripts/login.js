@@ -16,7 +16,7 @@ async function loginUser(e) {
     try {
         const response = await axios.post('http://localhost:4000/user/login', userInfo);
         if (response.status == '200') {
-            window.location.href = `http://127.0.0.1:5500/FrontEnd/pages/home.html?userId=${response.data[0].id}/expenses`;
+            window.location.href = `http://127.0.0.1:5500/FrontEnd/pages/home.html?userId=${response.data[0].id}`;
         }
     } catch (error) {
         if (error.response.status == '409') {

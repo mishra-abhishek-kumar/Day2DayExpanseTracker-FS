@@ -9,16 +9,22 @@ form.addEventListener('submit', addExpense);
 expenseList.addEventListener('click', removeExpense);
 expenseList.addEventListener('click', editExpense);
 
+//getting userId to add expenses
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString);
+const userId = urlParams.get('userId');
+console.log(userId);
+
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        const expenses = await axios.get('http://localhost:4000/expense/get-expense/1');
+        const expenses = await axios.get(`http://localhost:4000/user/expenses/get-expense/${userId}`);
         for(let i=0; i<expenses.data.length; i++) {
             displayExpenseDetails(expenses.data[i]);
         }
     } catch (error) {
         console.log(error);
     }
-})
+});
 
 function displayExpenseDetails(expenseObj) {
     //Creating different elements to be added in DOM
@@ -88,7 +94,7 @@ async function addExpense(e) {
         }
 
         try {
-            const response = await axios.post(`http://localhost:4000/expense/add-expense/1`, expenseObj);
+            const response = await axios.post(`http://localhost:4000/user/expenses/add-expense/${userId}`, expenseObj);
             li.setAttribute("id", response.data.id);
             console.log(response.data);
         } catch (error) {
@@ -105,7 +111,7 @@ async function addExpense(e) {
 async function removeExpense(e) {
     if (e.target.classList.contains('del')) {
         try {
-            const response = await axios.delete(`http://localhost:4000/expense/delete-expense/${e.target.parentElement.id}`);
+            const response = await axios.delete(`http://localhost:4000/user/expenses/delete-expense/${e.target.parentElement.id}`);
             expenseList.removeChild(e.target.parentElement);
         } catch (error) {
             console.log(error);
@@ -120,7 +126,7 @@ async function editExpense(e) {
         inputDescription.value = partsString[1].trim();
         inputCategory.value = partsString[2].trim();
         try {
-            const response = await axios.delete(`http://localhost:4000/delete-expense/${e.target.parentElement.id}`);
+            const response = await axios.delete(`http://localhost:4000/user/expenses/delete-expense/${e.target.parentElement.id}`);
             expenseList.removeChild(e.target.parentElement);
         } catch (error) {
             console.log(error);
