@@ -15,6 +15,7 @@ const mainRoute = require('./routes/index');
 //imports required for DB connection and table creation
 const sequelize = require('./util/dbConnect');
 const User = require('./models/User');
+const Expense = require('./models/Expense');
 
 //import required to allow CORS origin connection
 const cors = require("cors");
@@ -27,6 +28,9 @@ app.get('/:temp', (req, res) => {
 });
 
 const PORT = process.env.PORT || 4001;
+
+User.hasMany(Expense); //It will create a foreignKey to Comment table 
+Expense.belongsTo(User, { constraints: true }); //this constraints specifies that Post table should be created before Comment table
 
 sequelize.sync({force: true})
     .then(user => {

@@ -22,6 +22,8 @@ const signUpController = async (req, res) => {
 
         //creating new user
         const user = await User.create({name, email, password: hashedPassword});
+
+
         return res.status(201).json(user);
 
     } catch (error) {
