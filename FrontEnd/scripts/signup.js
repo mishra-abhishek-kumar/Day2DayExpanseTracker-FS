@@ -17,8 +17,9 @@ async function createUser(e) {
 
     try {
         const response = await axios.post('http://localhost:4000/user/signup', userInfo);
+        console.log(response);
         if (response.status == '201') {
-            window.location.href = 'http://127.0.0.1:5500/FrontEnd/pages/home.html';
+            window.location.href = `http://127.0.0.1:5500/FrontEnd/pages/home.html?userId=${response.data.id}/expenses`;
         }
     } catch (error) {
         if (error.response.status == '409') {
