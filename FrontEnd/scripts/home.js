@@ -4,10 +4,12 @@ const inputCategory = document.getElementById('expense-cat');
 const expenseList = document.getElementById('expenses');
 const form = document.getElementById('form');
 const msg = document.querySelector('.msg');
+const premiumBtn = document.getElementById('premium-btn');
 
 form.addEventListener('submit', addExpense);
 expenseList.addEventListener('click', removeExpense);
 expenseList.addEventListener('click', editExpense);
+premiumBtn.addEventListener('click', buyPremium);
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -130,6 +132,28 @@ async function editExpense(e) {
             expenseList.removeChild(e.target.parentElement);
         } catch (error) {
             console.log(error);
+        }
+    }
+}
+
+async function buyPremium() {
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await axios.get(`http://localhost:4000/purchase/buy-premium`, {
+        headers: {
+            "Authorization": accessToken
+        }
+    });
+    console.log(response);
+    var options = {
+        "key": response.data.key_id,
+        "order_id": response.data.order_id,
+        "handler": async function (response) {
+            await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
+                order_id: options.order_id,
+                payment_id: response.razorpay_payment_id
+            }, {headers: { "Authorization": accessToken }});
+
+            alert("You're a premium user now");
         }
     }
 }
