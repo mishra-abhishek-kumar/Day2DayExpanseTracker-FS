@@ -8,7 +8,7 @@ const signUpController = async (req, res) => {
         const { name, email, password } = req.body;
 
         //checking if any field is empty
-        if (!name || !email || !email) {
+        if (!name || !email || !password) {
             return res.status(400).send("All fields are required");
         }
 

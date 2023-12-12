@@ -1,15 +1,14 @@
 const inputExpense = document.getElementById('exp-amt');
-const inputDescription = document.getElementById('desc');
+const inputDescription = document.getElementById('exp-desc');
 const inputCategory = document.getElementById('expense-cat');
 const expenseList = document.getElementById('expenses');
 const form = document.getElementById('form');
-const msg = document.querySelector('.msg');
-const premiumBtn = document.getElementById('premium-btn');
+// const premiumBtn = document.getElementById('premium-btn');
 
 form.addEventListener('submit', addExpense);
 expenseList.addEventListener('click', removeExpense);
 expenseList.addEventListener('click', editExpense);
-premiumBtn.addEventListener('click', buyPremium);
+// premiumBtn.addEventListener('click', buyPremium);
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -18,7 +17,8 @@ window.addEventListener('DOMContentLoaded', async () => {
                 "Authorization": localStorage.getItem('accessToken')
             }
         });
-        for(let i=0; i<expenses.data.length; i++) {
+        console.log(expenses);
+        for (let i = 0; i < expenses.data.length; i++) {
             displayExpenseDetails(expenses.data[i]);
         }
     } catch (error) {
@@ -55,59 +55,52 @@ function displayExpenseDetails(expenseObj) {
 async function addExpense(e) {
     e.preventDefault();
 
-    if (inputExpense.value === '' || inputDescription.value === '' || inputCategory.value === '') {
-        msg.classList.add('error');
-        msg.innerHTML = 'Please enter all fields';
-        setTimeout(() => msg.remove(), 2000);
-    } else {
-        //Creating different elements to be added in DOM
-        const li = document.createElement('li');
-        const delBtn = document.createElement('input');
-        const editBtn = document.createElement('input');
+    //Creating different elements to be added in DOM
+    const li = document.createElement('li');
+    const delBtn = document.createElement('input');
+    const editBtn = document.createElement('input');
 
-        //Creating Delete button
-        delBtn.className = 'del float-right';
-        delBtn.setAttribute('type', "button");
-        delBtn.setAttribute('value', "DELETE");
+    //Creating Delete button
+    delBtn.className = 'del float-right';
+    delBtn.setAttribute('type', "button");
+    delBtn.setAttribute('value', "DELETE");
 
-        //Creating Edit button
-        editBtn.className = 'edit float-right';
-        editBtn.setAttribute('type', "button");
-        editBtn.setAttribute('value', "EDIT");
+    //Creating Edit button
+    editBtn.className = 'edit float-right';
+    editBtn.setAttribute('type', "button");
+    editBtn.setAttribute('value', "EDIT");
 
-        //Appending all above 3 elements
-        li.appendChild(document.createTextNode(`${inputExpense.value} - ${inputDescription.value} - ${inputCategory.value}`));
-        li.appendChild(delBtn);
-        li.appendChild(editBtn);
+    //Appending all above 3 elements
+    li.appendChild(document.createTextNode(`${inputExpense.value} - ${inputDescription.value} - ${inputCategory.value}`));
+    li.appendChild(delBtn);
+    li.appendChild(editBtn);
 
 
-        //appendimg the li to ul inside DOM
-        expenseList.appendChild(li);
+    //appendimg the li to ul inside DOM
+    expenseList.appendChild(li);
 
-        //Storing user Data as an object
-        const expenseObj = {
-            amt: `${inputExpense.value}`,
-            description: `${inputDescription.value}`,
-            category: `${inputCategory.value}`
-        }
-
-        try {
-            const response = await axios.post(`http://localhost:4000/expenses/add-expense`, expenseObj, {
-                headers: {
-                    "Authorization": localStorage.getItem('accessToken')
-                }
-            });
-            li.setAttribute("id", response.data.id);
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-
-        inputExpense.value = '';
-        inputDescription.value = '';
-        inputCategory.value = '';
-
+    //Storing user Data as an object
+    const expenseObj = {
+        amt: `${inputExpense.value}`,
+        description: `${inputDescription.value}`,
+        category: `${inputCategory.value}`
     }
+
+    try {
+        const response = await axios.post(`http://localhost:4000/expenses/add-expense`, expenseObj, {
+            headers: {
+                "Authorization": localStorage.getItem('accessToken')
+            }
+        });
+        li.setAttribute("id", response.data.id);
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+
+    inputExpense.value = '';
+    inputDescription.value = '';
+    inputCategory.value = '';
 }
 
 async function removeExpense(e) {
@@ -151,7 +144,7 @@ async function buyPremium() {
             await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
                 order_id: options.order_id,
                 payment_id: response.razorpay_payment_id
-            }, {headers: { "Authorization": accessToken }});
+            }, { headers: { "Authorization": accessToken } });
 
             alert("You're a premium user now");
         }

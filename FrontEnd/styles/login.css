@@ -7,6 +7,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
+::selection {
+    color: white;
+    background-color: #00572D;
+}
+
 .mainContainer {
     display: flex;
 }
@@ -35,7 +40,7 @@
 
 .headingMessage {
     font-size:xx-large;
-    color: green;
+    color: #00572D;
 }
 
 .logInForm {
@@ -86,41 +91,41 @@
     position: absolute;
     top: 0.5rem;
     left: 1rem;
-    color: green;
+    color: #00572D;
     pointer-events: none;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .input:focus {
-    border: 1px solid green;
+    border: 1px solid #00572D;
 }
 
 .input:is(:focus, :valid)~label {
     transform: translateY(-100%) scale(1);
     background-color: white;
     padding-inline: 0.3rem;
-    color: green;
+    color: #00572D;
 }
 
 input[type=submit] {
     width: 100%;
     background-color: white;
     cursor: pointer;
-    color: green;
+    color: #00572D;
     font-weight: 500;
     padding: 0.5rem;
-    border: 1px solid green;
+    border: 1px solid #00572D;
     border-radius: 10px;
     transition: background-color 100ms linear;
 }
 
 input[type=submit]:hover {
     color: white;
-    background-color: green;
+    background-color: #00572D;
 }
 
 input[type=submit]:active {
-    color: green;
+    color: #00572D;
     background-color: white;
 }
 
@@ -138,7 +143,7 @@ input[type=submit]:active {
 }
 
 input[type=checkbox] {
-    accent-color: green;
+    accent-color: #00572D;
 }
 
 .signIn {
