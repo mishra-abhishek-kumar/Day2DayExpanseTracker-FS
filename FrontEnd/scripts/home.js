@@ -142,13 +142,19 @@ async function buyPremium(e) {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async (response) => {
-            console.log("Inside handler");
             await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
                 orderId: options.order_id,
                 paymentId: response.razorpay_payment_id
             }, { headers: { "Authorization": accessToken } });
 
-            alert("You're a premium user now");
+            Swal.fire({
+                title: `<span style="background: -webkit-linear-gradient(#B8860B, #FFD700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CONGRATULATIONS<span>`,
+                imageUrl: 'https://i.gifer.com/1Egv.gif',
+                showConfirmButton: false,
+                html: `You're now a premium user`,
+                showConfirmButton: true,
+                confirmButtonText: `Great!`
+            });
         },
         "theme": {
             "color": "#00572D;"
