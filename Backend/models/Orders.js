@@ -8,9 +8,15 @@ const Order = sequelize.define('orders', {
         allowNull: false,
         primaryKey: true
     },
-    paymentId: Sequelize.STRING,
-    orderId: Sequelize.STRING,
-    status: Sequelize.STRING
+    paymentId: {
+        type: Sequelize.STRING
+    },
+    orderId: {
+        type: Sequelize.STRING
+    },
+    status: {
+        type: Sequelize.STRING
+    }
 });
 
 module.exports = Order;

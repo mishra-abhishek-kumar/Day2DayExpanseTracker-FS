@@ -1,49 +1,39 @@
 const RazorPay = require('razorpay');
 const Order = require('../models/Orders');
+const User = require('../models/User');
 
 const purchasePremium = async (req, res) => {
+    const rzpInstance = new RazorPay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    });
+
+    const options = {
+        amount: 100,
+        currency: "INR"
+    };
+
     try {
-        const razorPay = new RazorPay({
-            key_id: process.env.RAZORPAY_KEY_ID,
-            key_secret: process.env.RAZORPAY_KEY_SECRET
-        })
+        const order = await rzpInstance.orders.create(options);
+        const newOrder = await Order.create({ orderId: order.id, status: 'PENDING' });
 
-        const purchaseAmt = 99;
-
-        razorPay.orders.create({ amount, currency: "INR" }, (err, order) => {
-            if(err) {
-                throw new Error(JSON.stringify(err));
-            }
-            req.user.createOrder({ orderid: order.id, status: 'PENDING'})
-                .then(() => {return res.status(201).json({ order, key_id: razorPay.key_id})})
-                .catch(err => {
-                    throw new Error(err);
-                })
-        })
-
+        res.status(201).json({ order, key_id: rzpInstance.key_id });
     } catch (error) {
         console.log(error);
-        res.status(403).json({ message: 'Something went wrong', error: err});
+        res.status(403).json({ message: `Something went wrong, can't generate order` })
     }
-};
+}
 
-const updateTransactionStatus = async (req, res) => {
+const updateTxnStatus = async (req, res) => {
+    const { orderId, paymentId } = req.body;
+    const userId = req.id;
+
     try {
-        const { payment_id, order_id } = req.body;
-        Order.findOne({ where: { orderId: order_id }}).then(order => {
-            order.update({ paymentId: payment_id, status: 'SUCCESSUL'}).then(() => {
-                req.user.update({ isPremium: true}).then(() => {
-                    return res.status(202).json({success: true, message: "Transction Successful"});
-                })
-                .catch((err) => {
-                    throw new Error(err);
-                })
-            }).catch(err => {
-                throw new Error(err);
-            })
-        }).catch(err => {
-            throw new Error(err);
-        })
+        const order = await Order.findAll({ where: { orderId: orderId } });
+        const updatedOrder = await Order.update({ paymentId: paymentId, status: 'SUCCESSUL' }, { where: { orderId: orderId }});
+        const updatedUser = await User.update({ isPremium: true }, { where: { id: userId }});
+
+        res.status(200).json({successful: true});
     } catch (error) {
         console.log(error);
     }
@@ -51,5 +41,5 @@ const updateTransactionStatus = async (req, res) => {
 
 module.exports = {
     purchasePremium,
-    updateTransactionStatus
+    updateTxnStatus
 }

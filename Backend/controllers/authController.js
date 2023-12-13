@@ -22,7 +22,7 @@ const signUpController = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         //creating new user
-        const user = await User.create({ name, email, password: hashedPassword });
+        const user = await User.create({ name, email, password: hashedPassword, isPremium: false });
 
         //generating accessToken
         const accessToken = generateAccessToken({ id: user.id });

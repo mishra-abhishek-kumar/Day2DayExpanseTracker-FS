@@ -36,6 +36,7 @@ Expense.belongsTo(User, { constraints: true }); //this constraints specifies tha
 User.hasMany(Order);
 Order.belongsTo(User, { constraints: true });
 
+// sequelize.sync({ force: true })
 sequelize.sync()
     .then(user => {
         app.listen(PORT, () => {

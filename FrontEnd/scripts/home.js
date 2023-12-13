@@ -3,12 +3,12 @@ const inputDescription = document.getElementById('exp-desc');
 const inputCategory = document.getElementById('expense-cat');
 const expenseList = document.getElementById('expenses');
 const form = document.getElementById('form');
-// const premiumBtn = document.getElementById('premium-btn');
+const premiumBtn = document.getElementById('buy-premium');
 
 form.addEventListener('submit', addExpense);
 expenseList.addEventListener('click', removeExpense);
 expenseList.addEventListener('click', editExpense);
-// premiumBtn.addEventListener('click', buyPremium);
+premiumBtn.addEventListener('click', buyPremium);
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 "Authorization": localStorage.getItem('accessToken')
             }
         });
-        console.log(expenses);
+
         for (let i = 0; i < expenses.data.length; i++) {
             displayExpenseDetails(expenses.data[i]);
         }
@@ -129,24 +129,37 @@ async function editExpense(e) {
     }
 }
 
-async function buyPremium() {
+async function buyPremium(e) {
+
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(`http://localhost:4000/purchase/buy-premium`, {
         headers: {
             "Authorization": accessToken
         }
     });
-    console.log(response);
-    var options = {
+
+    const options = {
         "key": response.data.key_id,
-        "order_id": response.data.order_id,
-        "handler": async function (response) {
+        "order_id": response.data.order.id,
+        "handler": async (response) => {
+            console.log("Inside handler");
             await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
-                order_id: options.order_id,
-                payment_id: response.razorpay_payment_id
+                orderId: options.order_id,
+                paymentId: response.razorpay_payment_id
             }, { headers: { "Authorization": accessToken } });
 
             alert("You're a premium user now");
+        },
+        "theme": {
+            "color": "#00572D;"
         }
     }
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+    e.preventDefault();
+    rzp.on('payment.failed', function (response) {
+        console.log(response);
+        alert("Something went wrong");
+    });
 }
