@@ -67,6 +67,15 @@ const loginController = async (req, res) => {
     }
 }
 
+const isPremium = async (req, res) => {
+    try {
+        const isPremium = await User.findByPk(req.id);
+        return res.status(200).json(isPremium)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const generateAccessToken = (id) => {
     try {
         const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_PRIVATE_KEY, {
@@ -81,6 +90,7 @@ const generateAccessToken = (id) => {
 
 module.exports = {
     signUpController,
-    loginController
+    loginController,
+    isPremium
 }
 

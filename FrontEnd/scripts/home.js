@@ -12,6 +12,19 @@ premiumBtn.addEventListener('click', buyPremium);
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
+        const userData = await axios.get(`http://localhost:4000/user/ispremium`, { headers: { "Authorization": localStorage.getItem('accessToken') } });
+        console.log(userData.data.isPremium);
+
+        if(userData.data.isPremium == false) {
+            document.getElementById('navbar').style.boxShadow = "0px 5px 25px 3px #00572D";
+            premiumBtn.className = 'premium-btn';
+            premiumBtn.innerHTML = 'BUY PREMIUM';
+            premiumBtn.style.display = 'block';
+        } else {
+            premiumBtn.style.display = 'none';
+            document.getElementById('navbar').style.boxShadow = "0px 5px 45px 10px #f7da8f";
+        }
+
         const expenses = await axios.get(`http://localhost:4000/expenses/get-expense`, {
             headers: {
                 "Authorization": localStorage.getItem('accessToken')
@@ -132,40 +145,51 @@ async function editExpense(e) {
 async function buyPremium(e) {
 
     const accessToken = localStorage.getItem('accessToken');
+    //getting orderId and razorpayKey from backend
     const response = await axios.get(`http://localhost:4000/purchase/buy-premium`, {
         headers: {
             "Authorization": accessToken
         }
     });
 
+    //creating object to pass inside payment
     const options = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
-        "handler": async (response) => {
+        "handler": async (response) => { //as soon as payment's done this handler function gets called(provides paymentId)
             await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
                 orderId: options.order_id,
                 paymentId: response.razorpay_payment_id
             }, { headers: { "Authorization": accessToken } });
 
+            //Firing SweetAlert on success
             Swal.fire({
                 title: `<span style="background: -webkit-linear-gradient(#B8860B, #FFD700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CONGRATULATIONS<span>`,
                 imageUrl: 'https://i.gifer.com/1Egv.gif',
                 showConfirmButton: false,
                 html: `You're now a premium user`,
-                showConfirmButton: true,
-                confirmButtonText: `Great!`
             });
+            setTimeout(() => location.reload(), 5000);
         },
         "theme": {
             "color": "#00572D;"
         }
     }
 
+    //Creating new payment 
     const rzp = new Razorpay(options);
-    rzp.open();
+    rzp.open(); // opens the payment page
+
     e.preventDefault();
+
     rzp.on('payment.failed', function (response) {
         console.log(response);
-        alert("Something went wrong");
+        //Firing SweetAlert on success
+        Swal.fire({
+            title: `Transaction Failed`,
+            showConfirmButton: false,
+            html: `Please try again`,
+            showConfirmButton: true,
+        });
     });
 }

@@ -3,6 +3,8 @@ const Order = require('../models/Orders');
 const User = require('../models/User');
 
 const purchasePremium = async (req, res) => {
+
+    //Creating new razorpay instance
     const rzpInstance = new RazorPay({
         key_id: process.env.RAZORPAY_KEY_ID,
         key_secret: process.env.RAZORPAY_KEY_SECRET
@@ -14,6 +16,7 @@ const purchasePremium = async (req, res) => {
     };
 
     try {
+        //creating new order using razorpay instance
         const order = await rzpInstance.orders.create(options);
         const newOrder = await Order.create({ orderId: order.id, status: 'PENDING' });
 
