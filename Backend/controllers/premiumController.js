@@ -1,6 +1,8 @@
 const RazorPay = require('razorpay');
 const Order = require('../models/Orders');
 const User = require('../models/User');
+const Expense = require('../models/Expense');
+const sequelize = require('../util/dbConnect');
 
 const purchasePremium = async (req, res) => {
 
@@ -42,7 +44,17 @@ const updateTxnStatus = async (req, res) => {
     }
 }
 
+const showLeaderboard = async (req, res) => {
+    try {
+        const expenses = await Expense.findAll({ attributes: ['userId', [sequelize.fn('SUM', sequelize.col('amt')), 'totalAmount']], group: ['userId'] });
+        res.send(expenses);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     purchasePremium,
-    updateTxnStatus
+    updateTxnStatus,
+    showLeaderboard
 }

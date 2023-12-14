@@ -13,17 +13,7 @@ premiumBtn.addEventListener('click', buyPremium);
 window.addEventListener('DOMContentLoaded', async () => {
     try {
         const userData = await axios.get(`http://localhost:4000/user/ispremium`, { headers: { "Authorization": localStorage.getItem('accessToken') } });
-        console.log(userData.data.isPremium);
-
-        if(userData.data.isPremium == false) {
-            document.getElementById('navbar').style.boxShadow = "0px 5px 25px 3px #00572D";
-            premiumBtn.className = 'premium-btn';
-            premiumBtn.innerHTML = 'BUY PREMIUM';
-            premiumBtn.style.display = 'block';
-        } else {
-            premiumBtn.style.display = 'none';
-            document.getElementById('navbar').style.boxShadow = "0px 5px 45px 10px #f7da8f";
-        }
+        premiumFeatur(userData.data.isPremium);
 
         const expenses = await axios.get(`http://localhost:4000/expenses/get-expense`, {
             headers: {
@@ -38,6 +28,22 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.log(error);
     }
 });
+
+function premiumFeatur(isPremium) {
+
+    if (isPremium == false) {
+        document.getElementById('navbar').style.boxShadow = "0px 5px 25px 3px #00572D";
+        premiumBtn.className = 'premium-btn';
+        premiumBtn.innerHTML = 'BUY PREMIUM';
+        premiumBtn.style.display = 'block';
+    } else {
+        premiumBtn.style.display = 'block';
+        premiumBtn.className = 'premium-btn';
+        premiumBtn.innerHTML = 'PREMIUM USER';
+        premiumBtn.style.pointerEvents = 'none';
+        document.getElementById('navbar').style.boxShadow = "0px 10px 40px 20px #f7da8f";
+    }
+}
 
 function displayExpenseDetails(expenseObj) {
     //Creating different elements to be added in DOM
@@ -146,7 +152,7 @@ async function buyPremium(e) {
 
     const accessToken = localStorage.getItem('accessToken');
     //getting orderId and razorpayKey from backend
-    const response = await axios.get(`http://localhost:4000/purchase/buy-premium`, {
+    const response = await axios.get(`http://localhost:4000/premium/buy-premium`, {
         headers: {
             "Authorization": accessToken
         }
@@ -157,7 +163,7 @@ async function buyPremium(e) {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async (response) => { //as soon as payment's done this handler function gets called(provides paymentId)
-            await axios.post(`http://localhost:4000/purchase/update-txn-status`, {
+            await axios.post(`http://localhost:4000/premium/update-txn-status`, {
                 orderId: options.order_id,
                 paymentId: response.razorpay_payment_id
             }, { headers: { "Authorization": accessToken } });

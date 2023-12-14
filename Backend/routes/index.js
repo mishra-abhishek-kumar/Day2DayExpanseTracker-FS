@@ -5,6 +5,6 @@ const purchaseRoute = require('./purchaseRouters');
 
 router.use('/user', userRoute);
 router.use('/expenses', expenseRoute);
-router.use('/purchase', purchaseRoute);
+router.use('/premium', purchaseRoute);
 
 module.exports = router;
