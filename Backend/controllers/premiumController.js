@@ -46,7 +46,8 @@ const updateTxnStatus = async (req, res) => {
 
 const showLeaderboard = async (req, res) => {
     try {
-        const expenses = await Expense.findAll({ attributes: ['userId', [sequelize.fn('SUM', sequelize.col('amt')), 'totalAmount']], group: ['userId'] });
+        // Group by both userId and user.id to avoid ambiguity
+        const expenses = await Expense.findAll({ attributes: [ [sequelize.fn('SUM', sequelize.col('amt')), 'totalAmount'] ], include: [ { model: User, attributes: ['name'] } ], group: ['userId', 'user.id', 'user.name'] })
         res.send(expenses);
     } catch (error) {
         console.log(error);
