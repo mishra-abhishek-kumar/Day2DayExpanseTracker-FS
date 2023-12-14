@@ -7,7 +7,6 @@ const premiumBtn = document.getElementById("buy-premium");
 
 form.addEventListener("submit", addExpense);
 expenseList.addEventListener("click", removeExpense);
-expenseList.addEventListener("click", editExpense);
 premiumBtn.addEventListener("click", buyPremium);
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -59,17 +58,11 @@ function displayExpenseDetails(expenseObj) {
 	//Creating different elements to be added in DOM
 	const li = document.createElement("li");
 	const delBtn = document.createElement("input");
-	const editBtn = document.createElement("input");
 
 	//Creating Delete button
 	delBtn.className = "del float-right";
 	delBtn.setAttribute("type", "button");
 	delBtn.setAttribute("value", "DELETE");
-
-	//Creating Edit button
-	editBtn.className = "edit float-right";
-	editBtn.setAttribute("type", "button");
-	editBtn.setAttribute("value", "EDIT");
 
 	//Appending all above 3 elements
 	li.appendChild(
@@ -78,7 +71,6 @@ function displayExpenseDetails(expenseObj) {
 		)
 	);
 	li.appendChild(delBtn);
-	li.appendChild(editBtn);
 	li.setAttribute("id", expenseObj.id);
 
 	//appendimg the li to ul inside DOM
@@ -91,17 +83,11 @@ async function addExpense(e) {
 	//Creating different elements to be added in DOM
 	const li = document.createElement("li");
 	const delBtn = document.createElement("input");
-	const editBtn = document.createElement("input");
 
 	//Creating Delete button
 	delBtn.className = "del float-right";
 	delBtn.setAttribute("type", "button");
 	delBtn.setAttribute("value", "DELETE");
-
-	//Creating Edit button
-	editBtn.className = "edit float-right";
-	editBtn.setAttribute("type", "button");
-	editBtn.setAttribute("value", "EDIT");
 
 	//Appending all above 3 elements
 	li.appendChild(
@@ -110,7 +96,6 @@ async function addExpense(e) {
 		)
 	);
 	li.appendChild(delBtn);
-	li.appendChild(editBtn);
 
 	//appendimg the li to ul inside DOM
 	expenseList.appendChild(li);
@@ -145,23 +130,6 @@ async function addExpense(e) {
 
 async function removeExpense(e) {
 	if (e.target.classList.contains("del")) {
-		try {
-			const response = await axios.delete(
-				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`
-			);
-			expenseList.removeChild(e.target.parentElement);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-}
-
-async function editExpense(e) {
-	if (e.target.classList.contains("edit")) {
-		partsString = e.target.parentElement.innerText.split("-");
-		inputExpense.value = partsString[0].trim();
-		inputDescription.value = partsString[1].trim();
-		inputCategory.value = partsString[2].trim();
 		try {
 			const response = await axios.delete(
 				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`
