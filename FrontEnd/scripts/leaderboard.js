@@ -2,6 +2,7 @@ const usersExpenseList = document.getElementById('list');
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {
+        document.getElementById('buy-premium').style.pointerEvents = 'none';
         const allUserExpenses = await axios.get(`http://localhost:4000/premium/show-leaderboard`, { headers: { "Authorization": localStorage.getItem('accessToken') } });
 
         for (let i = 0; i < allUserExpenses.data.length; i++) {

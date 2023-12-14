@@ -20,7 +20,7 @@ const purchasePremium = async (req, res) => {
     try {
         //creating new order using razorpay instance
         const order = await rzpInstance.orders.create(options);
-        const newOrder = await Order.create({ orderId: order.id, status: 'PENDING' });
+        const newOrder = await Order.create({ orderId: order.id, status: 'PENDING', userId: req.id });
 
         res.status(201).json({ order, key_id: rzpInstance.key_id });
     } catch (error) {
