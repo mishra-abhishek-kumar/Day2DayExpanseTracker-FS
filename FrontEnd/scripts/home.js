@@ -36,11 +36,15 @@ function premiumFeatur(isPremium) {
         premiumBtn.className = 'premium-btn';
         premiumBtn.innerHTML = 'BUY PREMIUM';
         premiumBtn.style.display = 'block';
+        document.getElementById('leader-board').style.display = 'none';
     } else {
         premiumBtn.style.display = 'block';
         premiumBtn.className = 'premium-btn';
         premiumBtn.innerHTML = 'PREMIUM USER';
         premiumBtn.style.pointerEvents = 'none';
+
+        document.getElementById('leader-board').innerHTML = 'LEADER-BOARD';
+
         document.getElementById('navbar').style.boxShadow = "0px 10px 40px 20px #f7da8f";
     }
 }
