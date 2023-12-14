@@ -1,21 +1,33 @@
 const Expense = require("../models/Expense");
 const User = require("../models/User");
+const sequelize = require("../util/dbConnect");
 
 const addExpense = async (req, res) => {
-	const user = await User.findByPk(req.id);
-    console.log(typeof req.body.amt);
-	const totalAmt = user.totalExpense + parseInt(req.body.amt);
-	console.log(typeof totalAmt);
-	await User.update({ totalExpense: totalAmt }, { where: { id: req.id } });
+    const txn = await sequelize.transaction();
+
+    const { amt, description, category } = req.body;
 	try {
+		const user = await User.findByPk(req.id);
+
+		const totalAmt = user.totalExpense + parseInt(req.body.amt);
+
+		await User.update({ totalExpense: totalAmt }, { were: { id: req.id } }, { transaction: txn });
+
 		const expense = await Expense.create({
-			amt: req.body.amt,
-			description: req.body.description,
-			category: req.body.category,
+			amt: amt,
+			description: description,
+			category: category,
 			userId: req.id,
-		});
+		}, { transaction: txn });
+
+        await txn.commit();
+
 		res.send(expense);
+
 	} catch (error) {
+        if(txn) {
+            await txn.rollback();
+        }
 		console.log(error);
 	}
 };
