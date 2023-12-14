@@ -1,6 +1,12 @@
 const Expense = require("../models/Expense");
+const User = require("../models/User");
 
 const addExpense = async (req, res) => {
+	const user = await User.findByPk(req.id);
+    console.log(typeof req.body.amt);
+	const totalAmt = user.totalExpense + parseInt(req.body.amt);
+	console.log(typeof totalAmt);
+	await User.update({ totalExpense: totalAmt }, { where: { id: req.id } });
 	try {
 		const expense = await Expense.create({
 			amt: req.body.amt,

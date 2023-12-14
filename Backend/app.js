@@ -37,8 +37,7 @@ User.hasMany(Order);
 Order.belongsTo(User, { constraints: true });
 
 // sequelize.sync({ force: true })
-sequelize
-	.sync()
+sequelize.sync()
 	.then((user) => {
 		app.listen(PORT, () => {
 			console.log("Listening on PORT:", PORT);

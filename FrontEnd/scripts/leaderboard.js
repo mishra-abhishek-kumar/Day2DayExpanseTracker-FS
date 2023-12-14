@@ -21,8 +21,8 @@ function displayLeaderBoard(data) {
 	const thName = document.createElement("th");
 	const thAmt = document.createElement("th");
 
-	thName.appendChild(document.createTextNode(data.user.name));
-	thAmt.appendChild(document.createTextNode(data.totalAmount));
+	thName.appendChild(document.createTextNode(data.name));
+	thAmt.appendChild(document.createTextNode(data.totalExpense));
 	tr.appendChild(thName);
 	tr.appendChild(thAmt);
 
