@@ -39,7 +39,7 @@
 }
 
 .headingMessage {
-    font-size:xx-large;
+    font-size: xx-large;
     color: #00572D;
 }
 
@@ -64,7 +64,7 @@
     display: flex;
     flex-direction: column;
     padding-inline: 7rem;
-    width:45vw;
+    width: 45vw;
     margin: 40px 0px 0px 0px;
     gap: 1.5rem;
 }
