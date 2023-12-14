@@ -132,7 +132,9 @@ async function removeExpense(e) {
 	if (e.target.classList.contains("del")) {
 		try {
 			const response = await axios.delete(
-				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`
+				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`, {
+                    headers: { Authorization: localStorage.getItem("accessToken") },
+                }
 			);
 			expenseList.removeChild(e.target.parentElement);
 		} catch (error) {
