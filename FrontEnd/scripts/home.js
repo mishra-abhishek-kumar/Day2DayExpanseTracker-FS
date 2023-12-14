@@ -36,7 +36,7 @@ function premiumFeatur(isPremium) {
         premiumBtn.className = 'premium-btn';
         premiumBtn.innerHTML = 'BUY PREMIUM';
         premiumBtn.style.display = 'block';
-        document.getElementById('leader-board').style.display = 'none';
+        document.getElementsByClassName('leaderBoard')[0].style.display = 'none';
     } else {
         premiumBtn.style.display = 'block';
         premiumBtn.className = 'premium-btn';

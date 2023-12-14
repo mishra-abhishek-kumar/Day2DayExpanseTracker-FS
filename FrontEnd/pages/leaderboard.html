@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../styles/leaderboard.css">
+    <title>Expense Tracker</title>
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="appLogo">
+            <a href="http://127.0.0.1:5500/FrontEnd/pages/home.html"><img src="../assets/logo.png" alt="appLogo"></a>
+        </div>
+        <div class="premiumBtn">
+            <button class="premium-btn" id="buy-premium">PREMIUM USER</button>
+        </div>
+        <div class="leaderBoard">
+            <a href="#" id="leader-board">LEADER-BOARD</a>
+        </div>
+        <div class="profile">
+            <a href="#"><img src="../assets/rick.jpg" alt="profile"></a>
+        </div>
+    </nav>
+
+    <div class="mainContainer">
+        <div class="headingMessage">
+            <p>LEADER-BOARD</p>
+        </div>
+        <div class="listUsers">
+            <table id="list" style="width: 100%;">
+                <tr>
+                    <th style="background-color: #00572D; color: #fff;">Name</th>
+                    <th style="background-color: #00572D; color: #fff;">Total amt spend</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.1/axios.min.js"></script>
+    <script src="../scripts/leaderboard.js"></script>
+</body>
+
+</html>
