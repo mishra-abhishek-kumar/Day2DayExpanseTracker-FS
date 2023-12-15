@@ -59,8 +59,10 @@ const showLeaderboard = async (req, res) => {
 	try {
 		// Group by both userId and user.id to avoid ambiguity
 		const users = await User.findAll({
-            attributes: ['name', 'totalExpense']
-          });
+			attributes: ["name", "totalExpense"],
+            order: [['totalExpense', 'DESC']],
+		});
+
 		res.status(200).send(users);
 	} catch (error) {
 		console.log(error);

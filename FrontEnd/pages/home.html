@@ -11,17 +11,18 @@
 
 <body>
     <nav class="navbar" id="navbar">
-        <div class="appLogo">
-            <img src="../assets/logo.png" alt="appLogo">
-        </div>
-        <div class="premiumBtn">
-            <button id="buy-premium"></button>
-        </div>
-        <div class="leaderBoard">
-            <a href="http://127.0.0.1:5500/FrontEnd/pages/leaderboard.html" id="leader-board"></a>
-        </div>
-        <div class="profile">
-            <a href="#"><img src="../assets/rick.jpg" alt="profile"></a>
+        <div class="main-nav flex">
+            <a href="#" class="company-logo">
+                <img src="../assets/logo.png" alt="company-logo">
+            </a>
+            <div class="nav-links" id="nav-links">
+                <ul class="flex">
+                    <li><a id="buy-premium"></a></li>
+                    <li><a class="leaderBoard" id="leader-board"
+                            href="http://127.0.0.1:5500/FrontEnd/pages/leaderboard.html"></a></li>
+                    <li><a class="profile"><img src="../assets/rick.jpg" alt="profile-img"></a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
