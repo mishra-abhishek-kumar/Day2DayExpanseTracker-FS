@@ -80,18 +80,25 @@ async function resetPassword(e) {
 		showLoaderOnConfirm: true,
 		preConfirm: async (emailId) => {
 			try {
-                const response = await axios.post(`http://localhost:4000/user/forgot-password`, {email: emailId});
-				// const githubUrl = `https://api.github.com/users/${login}`;
-				// const response = await fetch(githubUrl);
-				// if (!response.ok) {
-				// 	return Swal.showValidationMessage(`${JSON.stringify(await response.json())}`);
-				// }
-				// return response.json();
+                const userExist = await axios.post(`http://localhost:4000/password/user-exist`, {email: emailId});
 
+                if(userExist.data.user.length == 1) {
+                    const response = await axios.post(`http://localhost:4000/password/forgot-password`, {email: emailId});
+                    Swal.fire({
+                        title: "Please check your email!",
+                        icon: "success"
+                    });
+                    console.log(response);
+                } else {
+                    Swal.fire({
+                        title: "Entered email doesn't exist!",
+                        text: "Please enter correct email",
+                        icon: "error"
+                    })
+                }
+                
 			} catch (error) {
-				Swal.showValidationMessage(`
-              Request failed: ${error}
-            `);
+				Swal.showValidationMessage(`Request failed: ${error}`);
 			}
 		},
 		allowOutsideClick: () => !Swal.isLoading(),

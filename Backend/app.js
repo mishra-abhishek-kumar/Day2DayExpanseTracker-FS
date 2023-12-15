@@ -14,9 +14,10 @@ const mainRoute = require("./routes/index");
 
 //imports required for DB connection and table creation
 const sequelize = require("./util/dbConnect");
-const User = require("./models/User");
-const Expense = require("./models/Expense");
+const User = require("./models/Users");
+const Expense = require("./models/Expenses");
 const Order = require("./models/Orders");
+const ForgotPassword = require("./models/ForgotPasswordRequests");
 
 //import required to allow CORS origin connection
 const cors = require("cors");
@@ -35,6 +36,9 @@ Expense.belongsTo(User, { constraints: true }); //this constraints specifies tha
 
 User.hasMany(Order);
 Order.belongsTo(User, { constraints: true });
+
+User.hasMany(ForgotPassword);
+ForgotPassword.belongsTo(User, { constraints: true });
 
 // sequelize.sync({ force: true })
 sequelize.sync()
