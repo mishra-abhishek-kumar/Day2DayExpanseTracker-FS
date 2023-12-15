@@ -3,9 +3,11 @@ const formEmail = document.getElementById("form-email");
 const formPassword = document.getElementById("form-password");
 const alert = document.querySelector(".alert");
 const checkbox = document.getElementById("show-password");
+const forgotPassword = document.getElementById("forgot-password");
 
 form.addEventListener("submit", loginUser);
 checkbox.addEventListener("change", togglePassword);
+forgotPassword.addEventListener("click", resetPassword);
 
 async function loginUser(e) {
 	e.preventDefault();
@@ -60,4 +62,38 @@ function togglePassword() {
 	} else {
 		formPassword.type = "password";
 	}
+}
+
+async function resetPassword(e) {
+	e.preventDefault();
+
+	Swal.fire({
+		title: "Forgot your password",
+		text: "Enter email address",
+		input: "text",
+		inputAttributes: {
+			autocapitalize: "off",
+		},
+		showCancelButton: true,
+		confirmButtonText: "Request reset link",
+		cancelButtonText: "Go back to login page",
+		showLoaderOnConfirm: true,
+		preConfirm: async (emailId) => {
+			try {
+                const response = await axios.post(`http://localhost:4000/user/forgot-password`, {email: emailId});
+				// const githubUrl = `https://api.github.com/users/${login}`;
+				// const response = await fetch(githubUrl);
+				// if (!response.ok) {
+				// 	return Swal.showValidationMessage(`${JSON.stringify(await response.json())}`);
+				// }
+				// return response.json();
+
+			} catch (error) {
+				Swal.showValidationMessage(`
+              Request failed: ${error}
+            `);
+			}
+		},
+		allowOutsideClick: () => !Swal.isLoading(),
+	});
 }

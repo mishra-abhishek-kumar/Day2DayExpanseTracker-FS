@@ -148,6 +148,11 @@ input[type=checkbox] {
 
 .signIn {
     margin-top: 10px;
+    font-weight: 500;
+}
+
+.forgotPassword {
+    color: #00572D;
 }
 
 .rightContainer {

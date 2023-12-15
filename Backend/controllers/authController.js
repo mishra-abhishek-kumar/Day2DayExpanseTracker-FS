@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Sib = require("sib-api-v3-sdk");
 
 const signUpController = async (req, res) => {
 	try {
@@ -79,6 +80,43 @@ const isPremium = async (req, res) => {
 	}
 };
 
+const forgotPassword = async (req, res) => {
+	try {
+		const client = Sib.ApiClient.instance;
+
+        //Instantiating the client
+		var apiKey = client.authentications["api-key"];
+
+		apiKey.apiKey = process.env.SIB_API_KEY;
+
+        var emailInstance = new Sib.TransactionalEmailsApi();
+
+        const sender = {
+            email: 'temporary.email1101@gmail.com',
+            name: 'DAY 2 DAY'
+        };
+
+        const receiver = [
+            {
+                email: 'temporary.email1101@gmail.com'
+            }
+        ];
+
+        const messageId = await emailInstance.sendTransacEmail({
+            sender,
+            to: receiver,
+            subject: `DAY 2 DAY - Create your new password!`,
+            htmlContent: `<a href='#'>Click here!</a>`
+        })
+
+        res.status(200).json({success: messageId});
+
+	} catch (error) {
+		console.log("Bhai error aa raha hai");
+        res.status(401).json({error: error});
+	}
+};
+
 const generateAccessToken = (id) => {
 	try {
 		const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_PRIVATE_KEY, {
@@ -95,4 +133,5 @@ module.exports = {
 	signUpController,
 	loginController,
 	isPremium,
+	forgotPassword,
 };
