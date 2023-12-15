@@ -60,7 +60,7 @@ const showLeaderboard = async (req, res) => {
 		// Group by both userId and user.id to avoid ambiguity
 		const users = await User.findAll({
 			attributes: ["name", "totalExpense"],
-            order: [['totalExpense', 'DESC']],
+			order: [["totalExpense", "DESC"]],
 		});
 
 		res.status(200).send(users);

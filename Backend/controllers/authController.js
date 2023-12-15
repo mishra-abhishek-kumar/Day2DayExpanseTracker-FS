@@ -2,7 +2,6 @@ const User = require("../models/Users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 const signUpController = async (req, res) => {
 	try {
 		//spreading user information from request body
