@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.main-nav {
+    width: 100%;
+    background-color: #00572D;
+    padding-inline: 4rem;
+}
+
+.company-logo {
+    width: fit-content;
+    height: 12vh;
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.nav-links a {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-links ul {
+    list-style: none;
+}
+
+.nav-links ul li {
+    padding: 10px;
+}
+
+.profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: gray;
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.premium-btn {
+    width: fit-content;
+    background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+    margin: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.3s;
+    background-size: 200% auto;
+    border-radius: 10px;
+    display: block;
+    right: 1vw;
+    top: 2%;
+}
+
+.premium-btn:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 0 10px #FFD700;
+    cursor: pointer;
+}
+
+.leaderBoard {
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.leaderBoard:hover {
+    background-color: #049e54;
+}
+
+.mainContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100vw;
+    height: 88vh;
+}
+
+.heading {
+    color: #00572D;;
+}
+
+.dailyReport,
+.monthlyReport,
+.yearlyReport {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0.5rem;
+    gap: 1rem;
+}
+
+.dailyTable, .monthlyTable, .yearlyTable {
+    width: 100%;
+    height: 65vh;
+    overflow: auto;
+}
+
+th {
+    background-color: #00572D;
+    color: white;
+}
+
+table, th, td {
+    border:1px solid #00572D;
+}
+
+/* Scrollbar */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #00572D;
+    border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #00572D;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #00572D;
+}
