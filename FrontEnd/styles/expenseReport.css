@@ -116,7 +116,7 @@ a {
 
 .dailyTable, .monthlyTable, .yearlyTable {
     width: 100%;
-    height: 65vh;
+    max-height: 63vh;
     overflow: auto;
 }
 
@@ -127,6 +127,22 @@ th {
 
 table, th, td {
     border:1px solid #00572D;
+}
+
+.downloadBtn {
+    background-color: #00572D;
+    color: white;
+    padding: 10px;
+}
+
+.downloadBtn:hover {
+    background-color: #082417;
+    color: white;
+}
+
+.downloadBtn:active {
+    background-color: #00572D;
+    color: white;
 }
 
 /* Scrollbar */
