@@ -1,8 +1,8 @@
 const usersExpenseList = document.getElementById("list");
 
 window.addEventListener("DOMContentLoaded", async () => {
+    document.getElementById("buy-premium").style.pointerEvents = "none";
 	try {
-		document.getElementById("buy-premium").style.pointerEvents = "none";
 		const allUserExpenses = await axios.get(
 			`http://localhost:4000/premium/show-leaderboard`,
 			{ headers: { Authorization: localStorage.getItem("accessToken") } }
@@ -18,8 +18,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 function displayLeaderBoard(data) {
 	const tr = document.createElement("tr");
-	const thName = document.createElement("th");
-	const thAmt = document.createElement("th");
+	const thName = document.createElement("td");
+	const thAmt = document.createElement("td");
 
 	thName.appendChild(document.createTextNode(data.name));
 	thAmt.appendChild(document.createTextNode(data.totalExpense));

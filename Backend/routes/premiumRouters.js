@@ -13,5 +13,8 @@ router.get(
 	requiredUser,
 	premiumController.showLeaderboard
 );
+router.get("/daily-expense-report", requiredUser, premiumController.dailyExpenseReport);
+router.get("/monthly-expense-report", requiredUser, premiumController.monthlyExpenseReport);
+router.get("/yearly-expense-report", requiredUser, premiumController.yearlyExpenseReport);
 
 module.exports = router;

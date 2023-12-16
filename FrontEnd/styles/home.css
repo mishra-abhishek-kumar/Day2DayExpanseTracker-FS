@@ -87,12 +87,12 @@
     cursor: pointer;
 }
 
-.leaderBoard {
+.leaderBoard, .expenseReport {
     padding: 8px 12px;
     border-radius: 10px;
 }
 
-.leaderBoard:hover {
+.leaderBoard:hover, .expenseReport:hover {
     background-color: #049e54;
 }
 

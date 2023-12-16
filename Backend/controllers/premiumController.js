@@ -3,6 +3,8 @@ const Order = require("../models/Orders");
 const User = require("../models/Users");
 const Expense = require("../models/Expenses");
 const sequelize = require("../util/dbConnect");
+const Sequelize = require("sequelize");
+const { Op } = Sequelize;
 
 const purchasePremium = async (req, res) => {
 	//Creating new razorpay instance
@@ -69,8 +71,85 @@ const showLeaderboard = async (req, res) => {
 	}
 };
 
+const dailyExpenseReport = async (req, res) => {
+	const today = new Date();
+	const todayDate = today.toISOString().split("T")[0]; // Get the current date in 'YYYY-MM-DD' format
+	console.log(todayDate); //only date
+	try {
+		const dailyReport = await Expense.findAll({
+			where: {
+				createdAt: {
+					[Op.between]: [
+						todayDate + "T00:00:00.000Z",
+						todayDate + "T23:59:59.999Z",
+					],
+				},
+				userId: req.id,
+			},
+		});
+
+		res.status(200).json({ dailyReport: dailyReport });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const monthlyExpenseReport = async (req, res) => {
+	try {
+		const monthlyReport = await Expense.findAll({
+			where: {
+				userId: req.id,
+				createdAt: {
+					[Op.and]: [
+						Sequelize.where(
+							Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+							"=",
+							Sequelize.fn("YEAR", Sequelize.fn("CURDATE"))
+						),
+						Sequelize.where(
+							Sequelize.fn("MONTH", Sequelize.col("createdAt")),
+							"=",
+							Sequelize.fn("MONTH", Sequelize.fn("CURDATE"))
+						),
+					],
+				},
+			},
+		});
+
+		res.status(200).json({ monthlyReport: monthlyReport });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const yearlyExpenseReport = async (req, res) => {
+	try {
+		const yearlyReport = await Expense.findAll({
+			where: {
+				userId: req.id,
+				createdAt: {
+					[Op.and]: [
+						Sequelize.where(
+							Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+							"=",
+							Sequelize.fn("YEAR", Sequelize.fn("CURDATE"))
+						),
+					],
+				},
+			},
+		});
+
+        res.status(200).json({ yearlyReport: yearlyReport });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	purchasePremium,
 	updateTxnStatus,
 	showLeaderboard,
+	dailyExpenseReport,
+	monthlyExpenseReport,
+	yearlyExpenseReport,
 };

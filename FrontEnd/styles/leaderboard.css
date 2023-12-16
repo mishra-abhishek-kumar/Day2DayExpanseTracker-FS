@@ -80,12 +80,14 @@
     top: 2%;
 }
 
-.premium-btn:hover {
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0 0 10px #FFD700;
-    cursor: pointer;
+.expenseReport {
+    padding: 8px 12px;
+}
+
+.expenseReport:hover {
+    padding: 8px 12px;
+    background-color: #049e54;
+    border-radius: 10px;
 }
 
 .leaderBoard {
@@ -127,4 +129,8 @@ table,
 th,
 td {
     border: 1px solid black;
+}
+
+td {
+    text-align: center;
 }

@@ -41,13 +41,15 @@ function premiumFeatur(isPremium) {
 		premiumBtn.innerHTML = "BUY PREMIUM";
 		premiumBtn.style.display = "block";
 		document.getElementsByClassName("leaderBoard")[0].style.display = "none";
+        document.getElementsByClassName("expenseReport")[0].style.display = "none";
 	} else {
 		premiumBtn.style.display = "block";
 		premiumBtn.className = "premium-btn";
 		premiumBtn.innerHTML = "PREMIUM USER";
 		premiumBtn.style.pointerEvents = "none";
 
-		document.getElementById("leader-board").innerHTML = "LEADER-BOARD";
+		document.getElementById("leader-board").innerHTML = "LEADER BOARD";
+        document.getElementById("expense-report").innerHTML = "EXPENSE REPORT";
 
 		document.getElementById("navbar").style.boxShadow =
 			"0px 10px 40px 20px #f7da8f";
@@ -132,9 +134,10 @@ async function removeExpense(e) {
 	if (e.target.classList.contains("del")) {
 		try {
 			const response = await axios.delete(
-				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`, {
-                    headers: { Authorization: localStorage.getItem("accessToken") },
-                }
+				`http://localhost:4000/expenses/delete-expense/${e.target.parentElement.id}`,
+				{
+					headers: { Authorization: localStorage.getItem("accessToken") },
+				}
 			);
 			expenseList.removeChild(e.target.parentElement);
 		} catch (error) {

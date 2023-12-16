@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+}
+
+::selection {
+    color: white;
+    background-color: #00572D;
 }
 
 a {
@@ -21,6 +28,7 @@ a {
     width: 100%;
     background-color: #00572D;
     padding-inline: 4rem;
+    box-shadow: 0px 10px 40px 20px #f7da8f;
 }
 
 .company-logo {
@@ -76,12 +84,20 @@ a {
     top: 2%;
 }
 
-.premium-btn:hover {
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0 0 10px #FFD700;
-    cursor: pointer;
+.expenseReport {
+    padding: 8px 12px;
+}
+
+.expenseReport:hover {
+    padding: 8px 12px;
+    background-color: #049e54;
+    border-radius: 10px;
+}
+
+.expenseReport {
+    padding: 8px 12px;
+    background-color: #049e54;
+    border-radius: 10px;
 }
 
 .leaderBoard {
@@ -97,11 +113,12 @@ a {
     display: grid;
     grid-template-columns: auto auto auto;
     width: 100vw;
-    height: 88vh;
+    height: 87vh;
 }
 
 .heading {
-    color: #00572D;;
+    color: #00572D;
+    font-size: xx-large;
 }
 
 .dailyReport,
@@ -114,7 +131,9 @@ a {
     gap: 1rem;
 }
 
-.dailyTable, .monthlyTable, .yearlyTable {
+.dailyTable,
+.monthlyTable,
+.yearlyTable {
     width: 100%;
     max-height: 63vh;
     overflow: auto;
@@ -125,8 +144,12 @@ th {
     color: white;
 }
 
-table, th, td {
-    border:1px solid #00572D;
+table,
+th,
+td {
+    border: 1px solid #00572D;
+    border-collapse: collapse;
+    padding: 0.3rem;
 }
 
 .downloadBtn {
