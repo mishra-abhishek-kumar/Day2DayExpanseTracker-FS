@@ -74,7 +74,7 @@ const showLeaderboard = async (req, res) => {
 const dailyExpenseReport = async (req, res) => {
 	const today = new Date();
 	const todayDate = today.toISOString().split("T")[0]; // Get the current date in 'YYYY-MM-DD' format
-	console.log(todayDate); //only date
+
 	try {
 		const dailyReport = await Expense.findAll({
 			where: {

@@ -106,3 +106,74 @@ function displayYearlyExpenseReport(data) {
 
 	userYearlyExpenseReport.appendChild(tr);
 }
+
+//downloading pdf using jsPDF
+function downloadDailyReportPDF() {
+	// Get the HTML table element
+	var table = document.getElementById("daily-report");
+
+	// Create a new jsPDF instance
+	var pdf = new jsPDF();
+
+	// Customize the heading and logo styles
+	var logo = document.getElementById("app-logo");
+	var imageData = new Image();
+	imageData.src = logo.src;
+	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
+
+	// Use the autoTable plugin to add the table to the PDF
+	pdf.autoTable({ html: table, startY: 35 });
+
+	// Download the PDF
+	pdf.save("DAY 2 DAY - Daily Report.pdf");
+}
+
+function downloadMonthlyReportPDF() {
+	// Get the HTML table element
+	var table = document.getElementById("monthly-report");
+
+	// Create a new jsPDF instance
+	var pdf = new jsPDF();
+
+	// Customize the heading and logo styles
+	var logo = document.getElementById("app-logo");
+	var imageData = new Image();
+	imageData.src = logo.src;
+	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
+
+	// Use the autoTable plugin to add the table to the PDF
+	pdf.autoTable({ html: table, startY: 35 });
+
+	// Download the PDF
+	pdf.save("DAY 2 DAY - Monthly Report.pdf");
+}
+
+function downloadYearlyReportPDF() {
+	// Get the HTML table element
+	var table = document.getElementById("yearly-report");
+
+	// Create a new jsPDF instance
+	var pdf = new jsPDF();
+
+	// Customize the heading and logo styles
+	var logo = document.getElementById("app-logo");
+	var imageData = new Image();
+	imageData.src = logo.src;
+	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
+
+	// Use the autoTable plugin to add the table to the PDF
+	pdf.autoTable({ html: table, startY: 35 });
+
+	// Download the PDF
+	pdf.save("DAY 2 DAY - Yearly Report.pdf");
+}
+
+document
+	.querySelector("#download-yearly-report")
+	.addEventListener("click", downloadDailyReportPDF);
+document
+	.querySelector("#download-daily-report")
+	.addEventListener("click", downloadMonthlyReportPDF);
+document
+	.querySelector("#download-monthly-report")
+	.addEventListener("click", downloadYearlyReportPDF);
