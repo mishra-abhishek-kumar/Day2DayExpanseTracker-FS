@@ -111,10 +111,9 @@
 
 .listUsers {
     width: 50vw;
-    /* height: 70vh; */
     background-color: #c0fdc0d3;
     border: 2px solid #00572D;
-    box-shadow: 0px 5px 5px 10px #c0fdc0d3;
+    border: 7px double #00572D;
 }
 
 

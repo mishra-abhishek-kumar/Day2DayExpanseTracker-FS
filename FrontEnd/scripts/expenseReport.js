@@ -1,43 +1,50 @@
 const userDailyExpenseReport = document.getElementById("daily-report");
 const userMonthlyExpenseReport = document.getElementById("monthly-report");
 const userYearlyExpenseReport = document.getElementById("yearly-report");
+const dailyReportURL = document.getElementById('download-daily-report');
+const monthlyReportURL = document.getElementById('download-monthly-report');
+const yearlyReportURL = document.getElementById('download-yearly-report');
 
 window.addEventListener("DOMContentLoaded", async () => {
 	document.getElementById("buy-premium").style.pointerEvents = "none";
 	try {
-		const dailyExpenseReport = await axios.get(
+		const expenseData = await axios.get(
 			`http://localhost:4000/premium/daily-expense-report`,
-			{ headers: { Authorization: localStorage.getItem("accessToken") } }
+            { headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
 
-		for (let i = 0; i < dailyExpenseReport.data.dailyReport.length; i++) {
-			displayDailyExpenseReport(dailyExpenseReport.data.dailyReport[i]);
+        console.log(expenseData.data.fileURL);
+        dailyReportURL.href = expenseData.data.fileURL;
+		for (let i = 0; i < expenseData.data.dailyReport.length; i++) {
+			displayDailyExpenseReport(expenseData.data.dailyReport[i]);
 		}
 	} catch (error) {
 		console.log(error);
 	}
 
 	try {
-		const monthlyExpenseReport = await axios.get(
+		const expenseData = await axios.get(
 			`http://localhost:4000/premium/monthly-expense-report`,
-			{ headers: { Authorization: localStorage.getItem("accessToken") } }
+            { headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
-
-		for (let i = 0; i < monthlyExpenseReport.data.monthlyReport.length; i++) {
-			displayMonthlyExpenseReport(monthlyExpenseReport.data.monthlyReport[i]);
+        console.log(expenseData.data.fileURL);
+        monthlyReportURL.href = expenseData.data.fileURL;
+		for (let i = 0; i < expenseData.data.monthlyReport.length; i++) {
+			displayMonthlyExpenseReport(expenseData.data.monthlyReport[i]);
 		}
 	} catch (error) {
 		console.log(error);
 	}
 
 	try {
-		const yearlyExpenseReport = await axios.get(
+		const expenseData = await axios.get(
 			`http://localhost:4000/premium/yearly-expense-report`,
-			{ headers: { Authorization: localStorage.getItem("accessToken") } }
+            { headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
-
-		for (let i = 0; i < yearlyExpenseReport.data.yearlyReport.length; i++) {
-			displayYearlyExpenseReport(yearlyExpenseReport.data.yearlyReport[i]);
+        console.log(expenseData.data.fileURL);
+        yearlyReportURL.href = expenseData.data.fileURL;
+		for (let i = 0; i < expenseData.data.yearlyReport.length; i++) {
+			displayYearlyExpenseReport(expenseData.data.yearlyReport[i]);
 		}
 	} catch (error) {
 		console.log(error);
@@ -106,74 +113,3 @@ function displayYearlyExpenseReport(data) {
 
 	userYearlyExpenseReport.appendChild(tr);
 }
-
-//downloading pdf using jsPDF
-function downloadDailyReportPDF() {
-	// Get the HTML table element
-	var table = document.getElementById("daily-report");
-
-	// Create a new jsPDF instance
-	var pdf = new jsPDF();
-
-	// Customize the heading and logo styles
-	var logo = document.getElementById("app-logo");
-	var imageData = new Image();
-	imageData.src = logo.src;
-	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
-
-	// Use the autoTable plugin to add the table to the PDF
-	pdf.autoTable({ html: table, startY: 35 });
-
-	// Download the PDF
-	pdf.save("DAY 2 DAY - Daily Report.pdf");
-}
-
-function downloadMonthlyReportPDF() {
-	// Get the HTML table element
-	var table = document.getElementById("monthly-report");
-
-	// Create a new jsPDF instance
-	var pdf = new jsPDF();
-
-	// Customize the heading and logo styles
-	var logo = document.getElementById("app-logo");
-	var imageData = new Image();
-	imageData.src = logo.src;
-	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
-
-	// Use the autoTable plugin to add the table to the PDF
-	pdf.autoTable({ html: table, startY: 35 });
-
-	// Download the PDF
-	pdf.save("DAY 2 DAY - Monthly Report.pdf");
-}
-
-function downloadYearlyReportPDF() {
-	// Get the HTML table element
-	var table = document.getElementById("yearly-report");
-
-	// Create a new jsPDF instance
-	var pdf = new jsPDF();
-
-	// Customize the heading and logo styles
-	var logo = document.getElementById("app-logo");
-	var imageData = new Image();
-	imageData.src = logo.src;
-	pdf.addImage(imageData, "PNG", 5, 5, 80, 30);
-
-	// Use the autoTable plugin to add the table to the PDF
-	pdf.autoTable({ html: table, startY: 35 });
-
-	// Download the PDF
-	pdf.save("DAY 2 DAY - Yearly Report.pdf");
-}
-
-document
-	.querySelector("#download-yearly-report")
-	.addEventListener("click", downloadDailyReportPDF);
-document
-	.querySelector("#download-daily-report")
-	.addEventListener("click", downloadMonthlyReportPDF);
-document
-	.querySelector("#download-monthly-report")
-	.addEventListener("click", downloadYearlyReportPDF);

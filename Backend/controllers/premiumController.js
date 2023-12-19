@@ -2,9 +2,9 @@ const RazorPay = require("razorpay");
 const Order = require("../models/Orders");
 const User = require("../models/Users");
 const Expense = require("../models/Expenses");
-const sequelize = require("../util/dbConnect");
 const Sequelize = require("sequelize");
 const { Op } = Sequelize;
+const AWS = require("aws-sdk");
 
 const purchasePremium = async (req, res) => {
 	//Creating new razorpay instance
@@ -88,9 +88,14 @@ const dailyExpenseReport = async (req, res) => {
 			},
 		});
 
-		res.status(200).json({ dailyReport: dailyReport });
+        const stringifiedExpense = JSON.stringify(dailyReport);
+        const filename = `DailyExpense${req.id}/${new Date()}.txt`;
+        const fileURL = await uploadToS3(stringifiedExpense, filename);
+
+		res.status(200).json({ fileURL, success: true, dailyReport });
 	} catch (error) {
 		console.log(error);
+        res.status(500).json({fileURL: '', success: false});
 	}
 };
 
@@ -116,9 +121,14 @@ const monthlyExpenseReport = async (req, res) => {
 			},
 		});
 
-		res.status(200).json({ monthlyReport: monthlyReport });
+		const stringifiedExpense = JSON.stringify(monthlyReport);
+        const filename = `MonthlyExpense${req.id}/${new Date()}.txt`;
+        const fileURL = await uploadToS3(stringifiedExpense, filename);
+
+		res.status(200).json({ fileURL, success: true, monthlyReport });
 	} catch (error) {
 		console.log(error);
+        res.status(500).json({fileURL: '', success: false});
 	}
 };
 
@@ -139,11 +149,43 @@ const yearlyExpenseReport = async (req, res) => {
 			},
 		});
 
-        res.status(200).json({ yearlyReport: yearlyReport });
+		const stringifiedExpense = JSON.stringify(yearlyReport);
+        const filename = `YearlyExpense${req.id}/${new Date()}.txt`;
+        const fileURL = await uploadToS3(stringifiedExpense, filename);
+
+		res.status(200).json({ fileURL, success: true, yearlyReport });
 	} catch (error) {
 		console.log(error);
+        res.status(500).json({fileURL: '', success: false});
 	}
 };
+
+function uploadToS3(data, filename) {
+
+	let s3bucket = new AWS.S3({
+		accessKeyId: process.env.IAM_USER_KEY,
+		secretAccessKey: process.env.IAM_USER_SECRET,
+	});
+
+	var params = {
+		Bucket: process.env.BUCKET_NAME,
+		Key: filename,
+		Body: data,
+        ACL: 'public-read'
+	};
+
+    return new Promise((resolve, reject) => {
+        s3bucket.upload(params, (err, s3response) => {
+            if (err) {
+                // console.log("Something went wrong", err);
+                reject(err);
+            } else {
+                // console.log("success", s3response);
+                resolve(s3response.Location);
+            }
+        });
+    } );
+}
 
 module.exports = {
 	purchasePremium,
