@@ -28,6 +28,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 		for (let i = 0; i < expenses.data.length; i++) {
 			displayExpenseDetails(expenses.data[i]);
 		}
+
+        
 	} catch (error) {
 		console.log(error);
 	}
@@ -125,9 +127,9 @@ async function addExpense(e) {
 		console.log(error);
 	}
 
-	inputExpense.value = "";
-	inputDescription.value = "";
-	inputCategory.value = "";
+	// inputExpense.value = "";
+	// inputDescription.value = "";
+	// inputCategory.value = "";
 }
 
 async function removeExpense(e) {

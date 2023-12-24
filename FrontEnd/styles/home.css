@@ -191,6 +191,10 @@ input[type=submit]:active {
     margin-top: 3rem;
 }
 
+ul {
+    margin-top: 30px;
+}
+
 ul li {
     padding: 10px;
     background: #00572D;
@@ -219,18 +223,20 @@ ul li {
     cursor: pointer;
 }
 
-.edit {
-    padding: 2px 8px;
-    font-weight: bold;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: fit-content;
-    margin-left: 10px;
-    margin-top: -3px;
+.paginationBtn {
+    margin-top: 10px;
+    padding: 3px 10px;
+    font-weight: 500;
+    color: #00572D;
 }
 
-.edit:hover {
-    background-color: rgb(219, 219, 219);
+.paginationBtn:hover {
+    background-color: #00572D;
+    color: white;
     cursor: pointer;
+}
+
+.paginationBtn:active {
+    background-color: white;
+    color: #00572D;
 }

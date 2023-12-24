@@ -39,8 +39,12 @@ const addExpense = async (req, res) => {
 };
 
 const getExpense = async (req, res) => {
+    let page = 1;
+    const expensePerPage = 5;
 	try {
-		const expenses = await Expense.findAll({ where: { userId: req.id } });
+        // const skip = (page - 1) * expensePerPage;
+        const skip = 0;
+		const expenses = await Expense.findAll({limit: expensePerPage, offset: skip, where: { userId: req.id } });
 		res.send(expenses);
 	} catch (error) {
 		console.log(error);
