@@ -4,12 +4,31 @@ const inputCategory = document.getElementById("expense-cat");
 const expenseList = document.getElementById("expenses");
 const form = document.getElementById("form");
 const premiumBtn = document.getElementById("buy-premium");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
 form.addEventListener("submit", addExpense);
 expenseList.addEventListener("click", removeExpense);
 premiumBtn.addEventListener("click", buyPremium);
+prevBtn.addEventListener("click", () => {
+	if (currentPage > 1) {
+		currentPage--;
+		paginatedData(currentPage);
+		console.log("page no", currentPage);
+	}
+});
+nextBtn.addEventListener("click", () => {
+	currentPage++;
+	paginatedData(currentPage);
+	console.log("page no", currentPage);
+});
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", paginatedData(1));
+
+const itemsPerPage = 5;
+let currentPage = 1;
+
+async function paginatedData(page) {
 	try {
 		const userData = await axios.get(`http://localhost:4000/user/ispremium`, {
 			headers: { Authorization: localStorage.getItem("accessToken") },
@@ -25,15 +44,36 @@ window.addEventListener("DOMContentLoaded", async () => {
 			}
 		);
 
-		for (let i = 0; i < expenses.data.length; i++) {
-			displayExpenseDetails(expenses.data[i]);
+		const startIndex = (page - 1) * itemsPerPage;
+		const endIndex = startIndex + itemsPerPage;
+		const pageData = expenses.data.slice(startIndex, endIndex);
+
+        expenseList.innerHTML = '';
+
+		for (let i = 0; i < pageData.length; i++) {
+			displayExpenseDetails(pageData[i]);
 		}
 
-        
+		if (startIndex == 0) {
+			prevBtn.disabled = true;
+			prevBtn.style.pointerEvents = "none";
+		} else {
+			prevBtn.disabled = false;
+			prevBtn.style.pointerEvents = "auto";
+		}
+
+		if (endIndex >= expenses.data.length) {
+			nextBtn.disabled = true;
+			nextBtn.style.pointerEvents = "none";
+		} else {
+			nextBtn.disabled = false;
+			nextBtn.style.pointerEvents = "auto";
+		}
 	} catch (error) {
 		console.log(error);
 	}
-});
+}
+
 
 function premiumFeatur(isPremium) {
 	if (isPremium == false) {
@@ -43,7 +83,7 @@ function premiumFeatur(isPremium) {
 		premiumBtn.innerHTML = "BUY PREMIUM";
 		premiumBtn.style.display = "block";
 		document.getElementsByClassName("leaderBoard")[0].style.display = "none";
-        document.getElementsByClassName("expenseReport")[0].style.display = "none";
+		document.getElementsByClassName("expenseReport")[0].style.display = "none";
 	} else {
 		premiumBtn.style.display = "block";
 		premiumBtn.className = "premium-btn";
@@ -51,7 +91,7 @@ function premiumFeatur(isPremium) {
 		premiumBtn.style.pointerEvents = "none";
 
 		document.getElementById("leader-board").innerHTML = "LEADER BOARD";
-        document.getElementById("expense-report").innerHTML = "EXPENSE REPORT";
+		document.getElementById("expense-report").innerHTML = "EXPENSE REPORT";
 
 		document.getElementById("navbar").style.boxShadow =
 			"0px 10px 40px 20px #f7da8f";
