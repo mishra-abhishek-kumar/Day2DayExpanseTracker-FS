@@ -6,6 +6,7 @@ const form = document.getElementById("form");
 const premiumBtn = document.getElementById("buy-premium");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
+const rowsPerPageSelect = document.getElementById("rowsPerPageSelect");
 
 form.addEventListener("submit", addExpense);
 expenseList.addEventListener("click", removeExpense);
@@ -23,9 +24,13 @@ nextBtn.addEventListener("click", () => {
 	console.log("page no", currentPage);
 });
 
+rowsPerPageSelect.addEventListener('change', (e) => {
+    updateItemsPerPage(e.target.value);
+});
+
 window.addEventListener("DOMContentLoaded", paginatedData(1));
 
-const itemsPerPage = 5;
+let itemsPerPage = !localStorage.getItem("noOfItems") ? 5 : localStorage.getItem("noOfItems");
 let currentPage = 1;
 
 async function paginatedData(page) {
@@ -43,10 +48,11 @@ async function paginatedData(page) {
 				},
 			}
 		);
-
+        console.log("ItemsPerPage", itemsPerPage);
 		const startIndex = (page - 1) * itemsPerPage;
 		const endIndex = startIndex + itemsPerPage;
 		const pageData = expenses.data.slice(startIndex, endIndex);
+        rowsPerPageSelect.value = localStorage.getItem("rowsPerPage") || 5;
 
         expenseList.innerHTML = '';
 
@@ -74,6 +80,13 @@ async function paginatedData(page) {
 	}
 }
 
+function updateItemsPerPage(value) {
+    itemsPerPage = parseInt(value);
+    currentPage = 1; // Reset to the first page when changing itemsPerPage
+    localStorage.setItem("noOfItems", itemsPerPage);
+    localStorage.setItem("rowsPerPage", value);
+    paginatedData(currentPage);
+}
 
 function premiumFeatur(isPremium) {
 	if (isPremium == false) {
