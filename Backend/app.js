@@ -9,6 +9,25 @@ dotenv.config({ path: "./.env" });
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+//import required to set additional headers to the response using helmet
+const helmet = require("helmet");
+app.use(helmet());
+
+//import required to compress the files on page load
+const compression = require("compression");
+app.use(compression()); //It does not compress img or mp4, only html, css, js files
+
+const fs = require("fs");
+const path = require("path");
+const accessLogStream = fs.createWriteStream(
+	path.join(__dirname, 'access.log'),
+	{ flags: "a" }
+);
+
+//import required to print logs
+const morgan = require("morgan");
+app.use(morgan("combined", { stream: accessLogStream }));
+
 //import required for main-routing
 const mainRoute = require("./routes/index");
 
@@ -41,7 +60,8 @@ User.hasMany(ForgotPassword);
 ForgotPassword.belongsTo(User, { constraints: true });
 
 // sequelize.sync({ force: true })
-sequelize.sync()
+sequelize
+	.sync()
 	.then((user) => {
 		app.listen(PORT, () => {
 			console.log("Listening on PORT:", PORT);
