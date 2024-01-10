@@ -7,6 +7,8 @@ const premiumBtn = document.getElementById("buy-premium");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const rowsPerPageSelect = document.getElementById("rowsPerPageSelect");
+const profile = document.getElementById("profile");
+const logout = document.getElementById("logout");
 
 form.addEventListener("submit", addExpense);
 expenseList.addEventListener("click", removeExpense);
@@ -15,17 +17,27 @@ prevBtn.addEventListener("click", () => {
 	if (currentPage > 1) {
 		currentPage--;
 		paginatedData(currentPage);
-		console.log("page no", currentPage);
 	}
 });
 nextBtn.addEventListener("click", () => {
 	currentPage++;
 	paginatedData(currentPage);
-	console.log("page no", currentPage);
 });
 
-rowsPerPageSelect.addEventListener('change', (e) => {
+rowsPerPageSelect.addEventListener("change", (e) => {
     updateItemsPerPage(e.target.value);
+});
+
+profile.addEventListener("click", (e) => {
+    if(document.getElementById("profile-container").style.display == "block") {
+        document.getElementById("profile-container").style.display = "none";
+    } else {
+        document.getElementById("profile-container").style.display = "block";
+    }
+});
+
+logout.addEventListener("click", (e) => {
+    localStorage.clear();
 });
 
 window.addEventListener("DOMContentLoaded", paginatedData(1));
@@ -38,6 +50,7 @@ async function paginatedData(page) {
 		const userData = await axios.get(`http://localhost:4000/user/ispremium`, {
 			headers: { Authorization: localStorage.getItem("accessToken") },
 		});
+
 		premiumFeatur(userData.data.isPremium);
 
 		const expenses = await axios.get(
@@ -48,9 +61,9 @@ async function paginatedData(page) {
 				},
 			}
 		);
-        console.log("ItemsPerPage", itemsPerPage);
+
 		const startIndex = (page - 1) * itemsPerPage;
-		const endIndex = startIndex + itemsPerPage;
+		const endIndex = startIndex + parseInt(itemsPerPage);
 		const pageData = expenses.data.slice(startIndex, endIndex);
         rowsPerPageSelect.value = localStorage.getItem("rowsPerPage") || 5;
 
@@ -180,9 +193,9 @@ async function addExpense(e) {
 		console.log(error);
 	}
 
-	// inputExpense.value = "";
-	// inputDescription.value = "";
-	// inputCategory.value = "";
+	inputExpense.value = "";
+	inputDescription.value = "";
+	inputCategory.value = "";
 }
 
 async function removeExpense(e) {

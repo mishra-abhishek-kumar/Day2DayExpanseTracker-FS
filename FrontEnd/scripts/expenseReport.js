@@ -4,6 +4,20 @@ const userYearlyExpenseReport = document.getElementById("yearly-report");
 const dailyReportURL = document.getElementById('download-daily-report');
 const monthlyReportURL = document.getElementById('download-monthly-report');
 const yearlyReportURL = document.getElementById('download-yearly-report');
+const profile = document.getElementById("profile");
+const logout = document.getElementById("logout");
+
+profile.addEventListener("click", (e) => {
+    if(document.getElementById("profile-container").style.display == "block") {
+        document.getElementById("profile-container").style.display = "none";
+    } else {
+        document.getElementById("profile-container").style.display = "block";
+    }
+});
+
+logout.addEventListener("click", (e) => {
+    localStorage.clear();
+});
 
 window.addEventListener("DOMContentLoaded", async () => {
 	document.getElementById("buy-premium").style.pointerEvents = "none";

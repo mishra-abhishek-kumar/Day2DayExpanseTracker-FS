@@ -1,4 +1,18 @@
 const usersExpenseList = document.getElementById("list");
+const profile = document.getElementById("profile");
+const logout = document.getElementById("logout");
+
+profile.addEventListener("click", (e) => {
+    if(document.getElementById("profile-container").style.display == "block") {
+        document.getElementById("profile-container").style.display = "none";
+    } else {
+        document.getElementById("profile-container").style.display = "block";
+    }
+});
+
+logout.addEventListener("click", (e) => {
+    localStorage.clear();
+});
 
 window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("buy-premium").style.pointerEvents = "none";

@@ -16,10 +16,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .main-nav {
+    height: 6rem;
     width: 100%;
     background-color: #00572D;
     padding-inline: 4rem;
@@ -43,6 +43,7 @@
 
 .nav-links ul {
     list-style: none;
+    margin-top: 0px;
 }
 
 .nav-links ul li {
@@ -54,6 +55,7 @@
     height: 50px;
     border-radius: 100%;
     background-color: gray;
+    cursor: pointer;
 }
 
 .profile img {
@@ -87,13 +89,40 @@
     cursor: pointer;
 }
 
-.leaderBoard, .expenseReport {
+.leaderBoard,
+.expenseReport {
     padding: 8px 12px;
     border-radius: 10px;
 }
 
-.leaderBoard:hover, .expenseReport:hover {
+.leaderBoard:hover,
+.expenseReport:hover {
     background-color: #049e54;
+}
+
+.profileContainer {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0 0 5px #eee;
+    position: absolute;
+    top: 4.5rem;
+    right: 3rem;
+    display: none;
+}
+
+.profileOptions a{
+    text-decoration: none;
+    display: flex;
+    color: #00572D;
+    gap: 10px;
+    box-shadow: 0 0 2px #00572D;
+    padding: 5px 20px;
+}
+
+.profileOptions a:hover {
+    color: black;
 }
 
 .mainContainer {
@@ -200,7 +229,7 @@ ul li {
     background: #00572D;
     color: white;
     margin: 5px 0;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .float-right {

@@ -20,7 +20,7 @@ app.use(compression()); //It does not compress img or mp4, only html, css, js fi
 const fs = require("fs");
 const path = require("path");
 const accessLogStream = fs.createWriteStream(
-	path.join(__dirname, 'access.log'),
+	path.join(__dirname, "access.log"),
 	{ flags: "a" }
 );
 
@@ -37,6 +37,7 @@ const User = require("./models/Users");
 const Expense = require("./models/Expenses");
 const Order = require("./models/Orders");
 const ForgotPassword = require("./models/ForgotPasswordRequests");
+const Download = require("./models/Downloads");
 
 //import required to allow CORS origin connection
 const cors = require("cors");
@@ -59,9 +60,11 @@ Order.belongsTo(User, { constraints: true });
 User.hasMany(ForgotPassword);
 ForgotPassword.belongsTo(User, { constraints: true });
 
+User.hasMany(Download);
+Download.belongsTo(User, { constraints: true});
+
 // sequelize.sync({ force: true })
-sequelize
-	.sync()
+sequelize.sync()
 	.then((user) => {
 		app.listen(PORT, () => {
 			console.log("Listening on PORT:", PORT);
