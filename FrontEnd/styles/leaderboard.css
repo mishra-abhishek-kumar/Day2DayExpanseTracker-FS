@@ -82,11 +82,13 @@
     top: 2%;
 }
 
-.expenseReport {
+.expenseReport,
+.downloads {
     padding: 8px 12px;
 }
 
-.expenseReport:hover {
+.expenseReport:hover,
+.downloads:hover {
     padding: 8px 12px;
     background-color: #049e54;
     border-radius: 10px;

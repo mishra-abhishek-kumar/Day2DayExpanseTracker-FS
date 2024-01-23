@@ -90,13 +90,15 @@
 }
 
 .leaderBoard,
-.expenseReport {
+.expenseReport,
+.downloads {
     padding: 8px 12px;
     border-radius: 10px;
 }
 
 .leaderBoard:hover,
-.expenseReport:hover {
+.expenseReport:hover,
+.downloads:hover {
     background-color: #049e54;
 }
 

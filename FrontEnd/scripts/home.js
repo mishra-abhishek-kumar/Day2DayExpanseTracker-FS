@@ -25,24 +25,26 @@ nextBtn.addEventListener("click", () => {
 });
 
 rowsPerPageSelect.addEventListener("change", (e) => {
-    updateItemsPerPage(e.target.value);
+	updateItemsPerPage(e.target.value);
 });
 
 profile.addEventListener("click", (e) => {
-    if(document.getElementById("profile-container").style.display == "block") {
-        document.getElementById("profile-container").style.display = "none";
-    } else {
-        document.getElementById("profile-container").style.display = "block";
-    }
+	if (document.getElementById("profile-container").style.display == "block") {
+		document.getElementById("profile-container").style.display = "none";
+	} else {
+		document.getElementById("profile-container").style.display = "block";
+	}
 });
 
 logout.addEventListener("click", (e) => {
-    localStorage.clear();
+	localStorage.clear();
 });
 
 window.addEventListener("DOMContentLoaded", paginatedData(1));
 
-let itemsPerPage = !localStorage.getItem("noOfItems") ? 5 : localStorage.getItem("noOfItems");
+let itemsPerPage = !localStorage.getItem("noOfItems")
+	? 5
+	: localStorage.getItem("noOfItems");
 let currentPage = 1;
 
 async function paginatedData(page) {
@@ -65,9 +67,9 @@ async function paginatedData(page) {
 		const startIndex = (page - 1) * itemsPerPage;
 		const endIndex = startIndex + parseInt(itemsPerPage);
 		const pageData = expenses.data.slice(startIndex, endIndex);
-        rowsPerPageSelect.value = localStorage.getItem("rowsPerPage") || 5;
+		rowsPerPageSelect.value = localStorage.getItem("rowsPerPage") || 5;
 
-        expenseList.innerHTML = '';
+		expenseList.innerHTML = "";
 
 		for (let i = 0; i < pageData.length; i++) {
 			displayExpenseDetails(pageData[i]);
@@ -94,11 +96,11 @@ async function paginatedData(page) {
 }
 
 function updateItemsPerPage(value) {
-    itemsPerPage = parseInt(value);
-    currentPage = 1; // Reset to the first page when changing itemsPerPage
-    localStorage.setItem("noOfItems", itemsPerPage);
-    localStorage.setItem("rowsPerPage", value);
-    paginatedData(currentPage);
+	itemsPerPage = parseInt(value);
+	currentPage = 1; // Reset to the first page when changing itemsPerPage
+	localStorage.setItem("noOfItems", itemsPerPage);
+	localStorage.setItem("rowsPerPage", value);
+	paginatedData(currentPage);
 }
 
 function premiumFeatur(isPremium) {
@@ -118,6 +120,7 @@ function premiumFeatur(isPremium) {
 
 		document.getElementById("leader-board").innerHTML = "LEADER BOARD";
 		document.getElementById("expense-report").innerHTML = "EXPENSE REPORT";
+		document.getElementById("downloads").innerHTML = "DOWNLOADS";
 
 		document.getElementById("navbar").style.boxShadow =
 			"0px 10px 40px 20px #f7da8f";

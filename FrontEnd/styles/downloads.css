@@ -12,11 +12,6 @@
     background-color: #00572D;
 }
 
-a {
-    color: white;
-    text-decoration: none;
-}
-
 .flex {
     display: flex;
     justify-content: space-between;
@@ -45,6 +40,7 @@ a {
 .nav-links a {
     text-decoration: none;
     display: inline-block;
+    color: white;
 }
 
 .nav-links ul {
@@ -87,30 +83,21 @@ a {
 }
 
 .expenseReport,
-.downloads {
+.leaderBoard {
     padding: 8px 12px;
 }
 
 .expenseReport:hover,
-.downloads:hover {
-    padding: 8px 12px;
-    background-color: #049e54;
-    border-radius: 10px;
-}
-
-.expenseReport {
-    padding: 8px 12px;
-    background-color: #049e54;
-    border-radius: 10px;
-}
-
-.leaderBoard {
-    padding: 8px 12px;
-    border-radius: 10px;
-}
-
 .leaderBoard:hover {
+    padding: 8px 12px;
     background-color: #049e54;
+    border-radius: 10px;
+}
+
+.downloads {
+    padding: 8px 12px;
+    background-color: #049e54;
+    border-radius: 10px;
 }
 
 .profileContainer {
@@ -139,83 +126,39 @@ a {
 }
 
 .mainContainer {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    width: 100vw;
-    height: 80vh;
-}
-
-.heading {
-    color: #00572D;
-    font-size: xx-large;
-}
-
-.dailyReport,
-.monthlyReport,
-.yearlyReport {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem 0.5rem;
-    gap: 1rem;
+    margin-top: 30px;
 }
 
-.dailyTable,
-.monthlyTable,
-.yearlyTable {
-    width: 100%;
-    max-height: 55vh;
-    overflow: auto;
+.headingMessage {
+    font-size: xx-large;
+    color: #00572D;
+    margin: 0px 0px 20px 0px;
 }
 
-th {
-    background-color: #00572D;
+.listUsers {
+    width: 50vw;
+    background-color: #c0fdc0d3;
+    border: 2px solid #00572D;
+    border: 7px double #00572D;
+}
+
+
+ul li {
+    padding: 10px;
+    background: #00572D;
     color: white;
+    margin: 5px 0;
 }
 
 table,
 th,
 td {
-    border: 1px solid #00572D;
-    border-collapse: collapse;
-    padding: 0.3rem;
+    border: 1px solid black;
 }
 
-.downloadBtn {
-    background-color: #00572D;
-    color: white;
-    padding: 10px;
-}
-
-.downloadBtn:hover {
-    background-color: #082417;
-    color: white;
-}
-
-.downloadBtn:active {
-    background-color: #00572D;
-    color: white;
-}
-
-/* Scrollbar */
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #00572D;
-    border-radius: 8px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #00572D;
-    border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #00572D;
+td {
+    text-align: center;
 }

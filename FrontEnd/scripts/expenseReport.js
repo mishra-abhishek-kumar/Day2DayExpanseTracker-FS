@@ -1,22 +1,22 @@
 const userDailyExpenseReport = document.getElementById("daily-report");
 const userMonthlyExpenseReport = document.getElementById("monthly-report");
 const userYearlyExpenseReport = document.getElementById("yearly-report");
-const dailyReportURL = document.getElementById('download-daily-report');
-const monthlyReportURL = document.getElementById('download-monthly-report');
-const yearlyReportURL = document.getElementById('download-yearly-report');
+const dailyReportURL = document.getElementById("download-daily-report");
+const monthlyReportURL = document.getElementById("download-monthly-report");
+const yearlyReportURL = document.getElementById("download-yearly-report");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
 
 profile.addEventListener("click", (e) => {
-    if(document.getElementById("profile-container").style.display == "block") {
-        document.getElementById("profile-container").style.display = "none";
-    } else {
-        document.getElementById("profile-container").style.display = "block";
-    }
+	if (document.getElementById("profile-container").style.display == "block") {
+		document.getElementById("profile-container").style.display = "none";
+	} else {
+		document.getElementById("profile-container").style.display = "block";
+	}
 });
 
 logout.addEventListener("click", (e) => {
-    localStorage.clear();
+	localStorage.clear();
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -24,11 +24,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 	try {
 		const expenseData = await axios.get(
 			`http://localhost:4000/premium/daily-expense-report`,
-            { headers: { Authorization: localStorage.getItem("accessToken") } }
+			{ headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
 
-        console.log(expenseData.data.fileURL);
-        dailyReportURL.href = expenseData.data.fileURL;
+		console.log(expenseData.data.fileURL);
+		dailyReportURL.href = expenseData.data.fileURL;
 		for (let i = 0; i < expenseData.data.dailyReport.length; i++) {
 			displayDailyExpenseReport(expenseData.data.dailyReport[i]);
 		}
@@ -39,10 +39,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 	try {
 		const expenseData = await axios.get(
 			`http://localhost:4000/premium/monthly-expense-report`,
-            { headers: { Authorization: localStorage.getItem("accessToken") } }
+			{ headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
-        console.log(expenseData.data.fileURL);
-        monthlyReportURL.href = expenseData.data.fileURL;
+		console.log(expenseData.data.fileURL);
+		monthlyReportURL.href = expenseData.data.fileURL;
 		for (let i = 0; i < expenseData.data.monthlyReport.length; i++) {
 			displayMonthlyExpenseReport(expenseData.data.monthlyReport[i]);
 		}
@@ -53,10 +53,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 	try {
 		const expenseData = await axios.get(
 			`http://localhost:4000/premium/yearly-expense-report`,
-            { headers: { Authorization: localStorage.getItem("accessToken") } }
+			{ headers: { Authorization: localStorage.getItem("accessToken") } }
 		);
-        console.log(expenseData.data.fileURL);
-        yearlyReportURL.href = expenseData.data.fileURL;
+		console.log(expenseData.data.fileURL);
+		yearlyReportURL.href = expenseData.data.fileURL;
 		for (let i = 0; i < expenseData.data.yearlyReport.length; i++) {
 			displayYearlyExpenseReport(expenseData.data.yearlyReport[i]);
 		}
@@ -127,3 +127,51 @@ function displayYearlyExpenseReport(data) {
 
 	userYearlyExpenseReport.appendChild(tr);
 }
+
+dailyReportURL.addEventListener("click", async (e) => {
+
+    const reportDetail = {
+        url: e.target.href,
+        downloadDate: new Date().toDateString().toString()
+    }
+
+	try {
+		await axios.post(`http://localhost:4000/premium/post-report-url`, reportDetail, {
+			headers: { Authorization: localStorage.getItem("accessToken") },
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+monthlyReportURL.addEventListener("click", async (e) => {
+
+    const reportDetail = {
+        url: e.target.href,
+        downloadDate: new Date().toDateString().toString()
+    }
+
+	try {
+		await axios.post(`http://localhost:4000/premium/post-report-url`, reportDetail, {
+			headers: { Authorization: localStorage.getItem("accessToken") },
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+yearlyReportURL.addEventListener("click", async (e) => {
+
+    const reportDetail = {
+        url: e.target.href,
+        downloadDate: new Date().toDateString().toString()
+    }
+
+	try {
+		await axios.post(`http://localhost:4000/premium/post-report-url`, reportDetail, {
+			headers: { Authorization: localStorage.getItem("accessToken") },
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
