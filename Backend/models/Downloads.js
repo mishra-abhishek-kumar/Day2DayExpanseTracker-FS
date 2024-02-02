@@ -13,7 +13,7 @@ const Download = sequelize.define("downloads", {
 		allowNull: false,
     },
     downloadDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false
     }
 });
